@@ -1,8 +1,8 @@
 package org.github.nyrkovalex.ironadmin.core.defaults;
 
-import org.github.nyrkovalex.ironadmin.core.IronContracts;
 import org.github.nyrkovalex.ironadmin.core.TemplateResolver;
 import org.github.nyrkovalex.ironadmin.core.pages.Page;
+import org.github.nyrkovalex.ironutils.IronContracts;
 import org.jetbrains.annotations.NotNull;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
@@ -41,6 +41,7 @@ public class ThymeleafTemplateResolver implements TemplateResolver {
     @Override
     public void resolvePageTemplate(String urlPrefix, @NotNull Page page, @NotNull Writer writer) {
         IronContracts.notNull(page, "page", writer, "writer");
+
         IContext context = new PageContext(page, urlPrefix);
         templateEngine.process(page.getTemplateName(), context, writer);
     }

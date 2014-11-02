@@ -19,7 +19,7 @@
     <parent>
         <artifactId>iron-admin</artifactId>
         <groupId>org.github.nyrkovalex</groupId>
-        <version>0.1-SNAPSHOT</version>
+        <version>0.1</version>
     </parent>
 
     <dependencies>
@@ -33,6 +33,11 @@
             <groupId>org.thymeleaf</groupId>
             <artifactId>thymeleaf</artifactId>
             <version>${thymeleaf.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.github.nyrkovalex</groupId>
+            <artifactId>iron-utils</artifactId>
+            <version>0.1</version>
         </dependency>
     </dependencies>
 

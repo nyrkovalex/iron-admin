@@ -1,7 +1,7 @@
 package org.github.nyrkovalex.ironadmin.core.pages;
 
-import org.github.nyrkovalex.ironadmin.core.IronContracts;
-import org.github.nyrkovalex.ironadmin.core.IronStrings;
+import org.github.nyrkovalex.ironutils.IronContracts;
+import org.github.nyrkovalex.ironutils.IronStrings;
 import org.jetbrains.annotations.NotNull;
 
 public class PropertyDefinition {

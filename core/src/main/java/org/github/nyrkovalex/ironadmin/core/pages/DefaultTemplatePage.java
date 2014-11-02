@@ -1,6 +1,6 @@
 package org.github.nyrkovalex.ironadmin.core.pages;
 
-import org.github.nyrkovalex.ironadmin.core.IronObjects;
+import org.github.nyrkovalex.ironutils.IronObjects;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
