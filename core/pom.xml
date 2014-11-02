@@ -57,6 +57,21 @@
                 <version>${exec-maven-plugin.version}</version>
                 <executions>
                     <execution>
+                        <id>npm-install</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <workingDirectory>${ia.ui.dir}</workingDirectory>
+                            <executable>npm</executable>
+                            <arguments>
+                                <argument>install</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>grunt</id>
                         <phase>generate-resources</phase>
                         <goals>
                             <goal>exec</goal>
