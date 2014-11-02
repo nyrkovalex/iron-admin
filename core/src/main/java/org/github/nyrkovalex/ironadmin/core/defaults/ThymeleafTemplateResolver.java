@@ -11,7 +11,7 @@ import org.thymeleaf.resourceresolver.ClassLoaderResourceResolver;
 
 import java.io.Writer;
 
-public class ThymeleafTemplateResolver implements TemplateResolver {
+class ThymeleafTemplateResolver implements TemplateResolver {
 
     public static final String UI_OUT_DIR = "ui/templates/";
     private final TemplateEngine templateEngine;
