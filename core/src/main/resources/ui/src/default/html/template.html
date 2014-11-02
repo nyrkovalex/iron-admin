@@ -34,7 +34,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="entity : ${ page.entities }">
+            <tr th:each="entity : ${ page.provider.all() }">
                 <td th:each="property : ${ page.properties }" th:text="${ entity.__${ property.name }__ }">Value</td>
             </tr>
             </tbody>

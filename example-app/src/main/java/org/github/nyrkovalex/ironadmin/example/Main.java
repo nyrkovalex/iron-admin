@@ -2,10 +2,13 @@ package org.github.nyrkovalex.ironadmin.example;
 
 import org.github.nyrkovalex.ironadmin.core.AdminContext;
 import org.github.nyrkovalex.ironadmin.core.defaults.DefaultContext;
+import org.github.nyrkovalex.ironadmin.core.pages.DefaultTemplatePage;
 import org.github.nyrkovalex.ironadmin.core.pages.PageRegistry;
-import org.github.nyrkovalex.ironadmin.example.pages.CommentsPage;
-import org.github.nyrkovalex.ironadmin.example.pages.GroupsPage;
-import org.github.nyrkovalex.ironadmin.example.pages.UsersPage;
+import org.github.nyrkovalex.ironadmin.core.pages.PropertyDefinition;
+import org.github.nyrkovalex.ironadmin.example.comments.Comment;
+import org.github.nyrkovalex.ironadmin.example.comments.CommentProvider;
+import org.github.nyrkovalex.ironadmin.example.groups.GroupsPage;
+import org.github.nyrkovalex.ironadmin.example.users.UsersPage;
 import org.github.nyrkovalex.ironadmin.server.IronAdminServer;
 
 public class Main {
@@ -16,7 +19,13 @@ public class Main {
         pageRegistry.register(
                 new UsersPage(),
                 new GroupsPage(),
-                new CommentsPage()
+                DefaultTemplatePage
+                        .createFor(Comment.class)
+                        .titled("Comments")
+                        .putAt("/comments")
+                        .withOverrides(new PropertyDefinition("createdDate", "Posted On"))
+                        .backedBy(new CommentProvider())
+                        .build()
         );
         IronAdminServer server = new IronAdminServer(8080, "/example/admin/*");
         server.start();

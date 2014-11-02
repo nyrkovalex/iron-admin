@@ -1,8 +1,8 @@
 package org.github.nyrkovalex.ironadmin.core.pages;
 
+import org.github.nyrkovalex.ironadmin.core.EntityProvider;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -61,5 +61,5 @@ public interface Page<T> {
     List<PropertyDefinition> getProperties();
 
     @NotNull
-    Collection<T> getEntities();
+    EntityProvider getProvider();
 }

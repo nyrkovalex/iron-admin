@@ -1,4 +1,4 @@
-package org.github.nyrkovalex.ironadmin.example.entities;
+package org.github.nyrkovalex.ironadmin.example.users;
 
 @SuppressWarnings("UnusedDeclaration")
 public class User {

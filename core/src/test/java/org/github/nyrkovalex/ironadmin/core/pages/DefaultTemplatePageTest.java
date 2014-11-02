@@ -1,12 +1,9 @@
 package org.github.nyrkovalex.ironadmin.core.pages;
 
 import org.github.nyrkovalex.ironadmin.core.SampleBean;
-import org.jetbrains.annotations.NotNull;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -14,18 +11,11 @@ import static org.junit.Assert.assertThat;
 
 public class DefaultTemplatePageTest {
 
-    private DefaultTemplatePage<SampleBean> page;
     private List<PropertyDefinition> properties;
 
     @Before
     public void setUp() throws Exception {
-        page = new DefaultTemplatePage<SampleBean>("Test", "/test", SampleBean.class) {
-            @NotNull
-            @Override
-            public Collection<SampleBean> getEntities() {
-                return Collections.emptyList();
-            }
-        };
+        DefaultTemplatePage<SampleBean> page = new DefaultTemplatePage<>("Test", "/test", SampleBean.class, null);
         page.overridePropertyDefinitions(new PropertyDefinition("age", "FooBar"),
                 new PropertyDefinition("firstName", "Dude"));
         properties = page.getProperties();

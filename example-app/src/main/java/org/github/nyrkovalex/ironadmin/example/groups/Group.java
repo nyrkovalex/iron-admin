@@ -1,4 +1,4 @@
-package org.github.nyrkovalex.ironadmin.example.entities;
+package org.github.nyrkovalex.ironadmin.example.groups;
 
 @SuppressWarnings("UnusedDeclaration")
 public class Group {
