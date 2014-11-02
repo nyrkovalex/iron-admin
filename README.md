@@ -18,6 +18,7 @@ To get it running do the following:
 ## Installation
 
 1. Project depend on [iron-utils](https://github.com/nyrkovalex/iron-utils) so go there and
+
   ```bash
   # create some directory on you system
   mkdir iron-stuff
@@ -30,7 +31,9 @@ To get it running do the following:
   cd iron-utils
   mvn install
   ```
+  
 2. Clone this repository and install artifacts
+
   ```bash
   # do not forget to go back in case you're under `iron-utils` directory
   cd ..
@@ -42,6 +45,7 @@ To get it running do the following:
 ## Run
 
 1. Run the example app starting `Main` class from `org.github.nyrkovalex.ironadmin.example` package adding `../server/target/classes` and `../core/target/classes` to the classpath
+
   ```bash
   # TODO
   ```
