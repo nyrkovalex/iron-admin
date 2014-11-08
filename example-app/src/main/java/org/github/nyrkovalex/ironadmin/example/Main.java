@@ -15,6 +15,7 @@ public class Main {
     public static void main(String... args) {
         AdminContext context = DefaultContext.getInstance();
         context.setTitle("Example Admin");
+
         PageRegistry pageRegistry = context.getRegistry();
         pageRegistry.register(
                 new UsersPage(),
@@ -23,11 +24,13 @@ public class Main {
                         .createFor(Comment.class)
                         .titled("Comments")
                         .putAt("/comments")
-                        .withOverrides(new PropertyDefinition("createdDate", "Posted On"))
+                        .skip("id")
+                        .override(new PropertyDefinition("createdDate", "Posted On"))
                         .backedBy(new CommentProvider())
                         .build()
         );
-        IronAdminServer server = new IronAdminServer(8080, "/example/admin/*");
+
+        IronAdminServer server = new IronAdminServer(8080, "/admin/*");
         server.start();
     }
 

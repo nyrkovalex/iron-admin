@@ -8,7 +8,7 @@ import java.util.List;
 
 public class GroupsPage extends DefaultTemplatePage<Group> {
     public GroupsPage() {
-        super("Groups", "/groups", Group.class, new GroupProvider());
+        super(Group.class, new GroupProvider());
     }
 
     private static class GroupProvider implements EntityProvider<Group> {

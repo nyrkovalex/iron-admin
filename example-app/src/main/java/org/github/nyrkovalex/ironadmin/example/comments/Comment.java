@@ -7,11 +7,17 @@ public class Comment {
     private final String user;
     private final String message;
     private final Date createdDate;
+    private final int id;
 
-    public Comment(String user, String message, Date createdDate) {
+    public Comment(int id, String user, String message, Date createdDate) {
         this.user = user;
         this.message = message;
         this.createdDate = createdDate;
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getUser() {
