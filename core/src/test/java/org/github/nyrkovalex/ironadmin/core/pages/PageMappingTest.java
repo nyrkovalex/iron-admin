@@ -7,37 +7,37 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 @SuppressWarnings("ConstantConditions")
-public class PageUrlTest {
+public class PageMappingTest {
 
-  private PageUrl pageUrl;
+  private PageMapping pageMapping;
 
   @Before
   public void setUp() throws Exception {
-    pageUrl = PageUrl.of(PageUrlTest.class);
+    pageMapping = PageMapping.of(PageMappingTest.class);
   }
 
   @Test
   public void testShouldUseClassNameAsPageUrl() throws Exception {
-    assertThat(pageUrl.getUrl(), is("/page-url-tests"));
+    assertThat(pageMapping.getUrl(), is("/page-url-tests"));
   }
 
 
   @Test(expected = IllegalArgumentException.class)
   public void testShouldThrowIfUrlIsNull() throws Exception {
     String url = null;
-    PageUrl.of(url);
+    PageMapping.of(url);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testShouldThrowIfClassIsNull() throws Exception {
     Class<?> clazz = null;
-    PageUrl.of(clazz);
+    PageMapping.of(clazz);
   }
 
 
   @Test(expected = IllegalArgumentException.class)
   public void testShouldThrowWhenConstructingWithEmptyUrl() throws Exception {
-    PageUrl.of("");
+    PageMapping.of("");
   }
 
 }

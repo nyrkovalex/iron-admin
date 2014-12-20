@@ -66,7 +66,7 @@ public class AdminDispatcherServlet extends HttpServlet {
   @Override
   protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     LOG.debug("Got request to " + req.getRequestURI());
-    String pageUrl = req.getRequestURI().replace(req.getServletPath(), "");
+    String pageUrl = getPageUrl(req);
     Optional<Page> page = adminContext.getRegistry().getPage(pageUrl);
     if (page.isPresent()) {
       req.setAttribute(PAGE_ATTR_NAME, page.get());
@@ -74,6 +74,15 @@ public class AdminDispatcherServlet extends HttpServlet {
       return;
     }
     resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+  }
+
+  private String getPageUrl(HttpServletRequest req) {
+    String requestURI = req.getRequestURI();
+    String withoutServletPath = requestURI.replace(req.getServletPath(), "");
+    int secondSlashIndex = withoutServletPath.indexOf('/', 1);
+    return secondSlashIndex < 0
+        ? withoutServletPath
+        : withoutServletPath.substring(0, secondSlashIndex);
   }
 
   @Override

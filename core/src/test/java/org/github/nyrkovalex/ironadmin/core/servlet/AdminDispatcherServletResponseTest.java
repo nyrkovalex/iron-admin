@@ -56,7 +56,16 @@ public class AdminDispatcherServletResponseTest extends AdminDispatcherServletTe
   }
 
   @Test
-  public void testShouldAskForCorrectPage() throws Exception {
+  public void testShouldAskForCorrectPageWIthLongPath() throws Exception {
+    PageRegistry registry = DummyFactory.getRegistry();
+    when(req.getRequestURI()).thenReturn("/foo/bar/some/stuff/here");
+    when(registry.getPage("/bar")).thenReturn(Optional.<Page>empty());
+    dispatcherServlet.service(req, res);
+    verify(registry).getPage("/bar");
+  }
+
+  @Test
+  public void testShouldAskForCorrectPageWithExactPath() throws Exception {
     PageRegistry registry = DummyFactory.getRegistry();
     when(req.getRequestURI()).thenReturn("/foo/bar");
     when(registry.getPage("/bar")).thenReturn(Optional.<Page>empty());

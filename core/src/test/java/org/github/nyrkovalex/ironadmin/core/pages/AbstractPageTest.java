@@ -16,29 +16,40 @@ import static org.junit.Assert.assertThat;
 public class AbstractPageTest {
 
   private List<PropertyDefinition> properties;
-  private EntityProvider<SampleBean> entityProvider;
+  private EntityProvider<SampleBean, Object> entityProvider;
 
   @Before
   public void setUp() throws Exception {
-    PageUrl meta = PageUrl.of("/test");
-    EntityMeta entityMeta = EntityMeta.of("Test", Arrays.asList(
-        new PropertyDefinition("age", "FooBar"),
-        new PropertyDefinition("firstName", "Dude")
-    ), Arrays.asList(
-        "secret"
-    ));
-    entityProvider = new EntityProvider<SampleBean>() {
+    PageMapping meta = PageMapping.of("/test");
+    EntityMeta entityMeta = EntityMeta.of(SampleBean.class)
+        .title("Test")
+        .overrides(Arrays.asList(
+            new PropertyDefinition("age", "FooBar"),
+            new PropertyDefinition("firstName", "Dude")))
+        .skips(Arrays.asList("secret"))
+        .build();
+
+    entityProvider = new EntityProvider<SampleBean, Object>() {
       @Override
       public List<SampleBean> all() {
         return Collections.emptyList();
       }
+
+      @Override
+      public SampleBean byId(Object o) {
+        return new SampleBean();
+      }
     };
-    Page<SampleBean> page = createAbstractPage(SampleBean.class, entityProvider, meta, entityMeta);
+    Page<SampleBean, Object> page = createAbstractPage(SampleBean.class, entityProvider, meta, entityMeta);
     properties = page.getProperties();
   }
 
-  private AbstractPage<SampleBean> createAbstractPage(Class<SampleBean> clazz, EntityProvider<SampleBean> entityProvider, final PageUrl meta, final EntityMeta entityMeta) {
-    return new AbstractPage<SampleBean>(clazz, entityProvider, meta, entityMeta) {
+  private AbstractPage<SampleBean, Object> createAbstractPage(Class<SampleBean> clazz,
+                                                      EntityProvider<SampleBean, Object> entityProvider,
+                                                      final PageMapping meta,
+                                                      final EntityMeta entityMeta)
+  {
+    return new AbstractPage<SampleBean, Object>(clazz, entityProvider, meta, entityMeta) {
       @NotNull
       @Override
       public String getTemplateName() {
@@ -67,21 +78,21 @@ public class AbstractPageTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void testShouldThrowWhenNullMetaProvided() throws Exception {
-    createAbstractPage(SampleBean.class, entityProvider, null, EntityMeta.of(SampleBean.class));
+    createAbstractPage(SampleBean.class, entityProvider, null, EntityMeta.of(SampleBean.class).build());
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testShouldThrowWhenNullSchemaProvided() throws Exception {
-    createAbstractPage(SampleBean.class, entityProvider, PageUrl.of("/url"), null);
+    createAbstractPage(SampleBean.class, entityProvider, PageMapping.of("/url"), null);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testShouldThrowWhenNullEntityProviderProvided() throws Exception {
-    createAbstractPage(SampleBean.class, null, PageUrl.of("/url"), EntityMeta.of(SampleBean.class));
+    createAbstractPage(SampleBean.class, null, PageMapping.of("/url"), EntityMeta.of(SampleBean.class).build());
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testShouldThrowWhenNullENtityClassProvided() throws Exception {
-    createAbstractPage(null, entityProvider, PageUrl.of("/url"), EntityMeta.of(SampleBean.class));
+    createAbstractPage(null, entityProvider, PageMapping.of("/url"), EntityMeta.of(SampleBean.class).build());
   }
 }

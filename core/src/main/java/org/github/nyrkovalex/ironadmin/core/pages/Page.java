@@ -11,12 +11,12 @@ import java.util.List;
  * implementation retrieved from {@link org.github.nyrkovalex.ironadmin.core.AdminContext AdminContext}.
  *
  * @param <T> type of an entity this page belongs to
+ * @param <ID> type of an entity id property
  * @see org.github.nyrkovalex.ironadmin.core.pages.PageRegistry PageRegistry
  * @see org.github.nyrkovalex.ironadmin.core.AdminContext AdminContext
  * @see org.github.nyrkovalex.ironadmin.core.defaults.DefaultContext DefaultContext
  */
-@SuppressWarnings("UnusedDeclaration")
-public interface Page<T> {
+public interface Page<T, ID> {
   /**
    * Page title to be displayed in the menu and as a pages header
    *
@@ -57,5 +57,8 @@ public interface Page<T> {
   List<PropertyDefinition> getProperties();
 
   @NotNull
-  EntityProvider getProvider();
+  EntityProvider<T, ID> getProvider();
+
+  @NotNull
+  String getIdPropertyName();
 }

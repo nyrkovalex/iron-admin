@@ -21,13 +21,11 @@ public class Main {
         new UsersPage(),
         new GroupsPage(),
         DefaultTemplatePage
-            .of(Comment.class)
+            .<Comment, Integer>of(Comment.class)
             .titled("Comments")
             .putAt("/comments")
             .skip("id")
-            .override(new PropertyDefinition(
-                "createdDate",
-                "Posted On"))
+            .override(new PropertyDefinition("createdDate", "Posted On"))
             .backedBy(new CommentProvider())
             .build()
     );

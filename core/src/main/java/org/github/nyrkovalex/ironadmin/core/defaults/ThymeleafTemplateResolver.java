@@ -13,7 +13,7 @@ import java.io.Writer;
 
 class ThymeleafTemplateResolver implements TemplateResolver {
 
-  public static final String UI_OUT_DIR = "ui/templates/";
+  public static final String UI_OUT_DIR = "ui/templates/default/html/";
   private final TemplateEngine templateEngine;
   private final IronAdminEnvironment env;
 
@@ -33,7 +33,7 @@ class ThymeleafTemplateResolver implements TemplateResolver {
     org.thymeleaf.templateresolver.TemplateResolver templateResolver =
         new org.thymeleaf.templateresolver.TemplateResolver();
     templateResolver.setPrefix(UI_OUT_DIR);
-    templateResolver.setSuffix("/html/template.html");
+    templateResolver.setSuffix(".html");
     templateResolver.setResourceResolver(new ClassLoaderResourceResolver());
     return templateResolver;
   }
@@ -42,13 +42,13 @@ class ThymeleafTemplateResolver implements TemplateResolver {
   public void resolvePageTemplate(String urlPrefix, @NotNull Page page, @NotNull Writer writer) {
     IronContracts.notNull(page, "page", writer, "writer");
 
-    IContext context = new PageContext(page, urlPrefix);
+    IContext context = new MainPageContext(page, urlPrefix);
     templateEngine.process(page.getTemplateName(), context, writer);
   }
 
-  private class PageContext extends Context {
+  private class MainPageContext extends Context {
 
-    public PageContext(Page page, String urlPrefix) {
+    public MainPageContext(Page page, String urlPrefix) {
       setVariable("page", page);
       setVariable("ia", env);
       setVariable("iaUrl", new UrlResolver(urlPrefix));

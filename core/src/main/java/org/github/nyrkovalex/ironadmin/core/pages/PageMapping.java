@@ -4,32 +4,32 @@ import org.github.nyrkovalex.ironutils.IronContracts;
 import org.github.nyrkovalex.ironutils.IronStrings;
 import org.jetbrains.annotations.NotNull;
 
-public class PageUrl {
+public class PageMapping {
   private final String url;
 
-  private PageUrl(String url) {
+  private PageMapping(String url) {
     this.url = url;
   }
 
-  private static String urlFromClassName(String name) {
+  private static String fromClassName(String name) {
     return "/" + IronStrings.splitCamelCaseToWords(name).stream()
         .reduce((left, right) -> left + "-" + right)
         .orElseThrow(AssertionError::new) + "s";
   }
 
-  public static PageUrl of(@NotNull Class<?> entityClass) {
+  public static PageMapping of(@NotNull Class<?> entityClass) {
     IronContracts.notNull(entityClass, "class");
 
-    return new PageUrl(urlFromClassName(entityClass.getSimpleName()));
+    return new PageMapping(fromClassName(entityClass.getSimpleName()));
   }
 
   public String getUrl() {
     return url;
   }
 
-  public static PageUrl of(@NotNull String url) {
+  public static PageMapping of(@NotNull String url) {
     IronContracts.notNullOrEmpty(url, "url");
 
-    return new PageUrl(url);
+    return new PageMapping(url);
   }
 }

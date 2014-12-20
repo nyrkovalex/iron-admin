@@ -3,12 +3,11 @@ package org.github.nyrkovalex.ironadmin.core.pages;
 import org.github.nyrkovalex.ironadmin.core.SampleBean;
 import org.junit.Test;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Optional;
 
-import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
 
 @SuppressWarnings("ConstantConditions")
@@ -16,81 +15,114 @@ public class EntityMetaTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void testShouldThrowIfClassIsNull() throws Exception {
-    EntityMeta.of(null);
+    Class<?> clazz = null;
+    EntityMeta.of(clazz);
   }
 
   @Test
   public void testShouldUseClassNameAsPageTitle() throws Exception {
-    EntityMeta meta = EntityMeta.of(SampleBean.class);
+    EntityMeta meta = EntityMeta.of(SampleBean.class).build();
     assertThat(meta.getTitle(), is("Sample Bean"));
   }
 
-  @Test(expected = IllegalArgumentException.class)
-  public void testShouldThrowIfTitleIsNull() throws Exception {
-    String title = null;
-    EntityMeta.of(title, Arrays.asList(
-        new PropertyDefinition("test")
-    ), Collections.emptyList());
+  @Test
+  public void testShoudCreateEntityMetaWithEmptyOverrides() throws Exception {
+    EntityMeta meta = EntityMeta.of(SampleBean.class).build();
+    assertThat(meta.getOverrides(), is(Collections.emptyList()));
   }
 
-  @Test(expected = IllegalArgumentException.class)
-  public void testShouldThrowIsSkippedAreNull() throws Exception {
-    Collection<String> skipped = null;
-    EntityMeta.of(SampleBean.class, skipped);
+  @Test
+  public void testShouldCreateEntityMetaWithEmptySkips() throws Exception {
+    EntityMeta meta = EntityMeta.of(SampleBean.class).build();
+    assertThat(meta.getSkippedProperties(), is(Collections.emptyList()));
   }
 
-  @Test(expected = IllegalArgumentException.class)
-  public void testShouldThrowIfTitleIsEmpty() throws Exception {
-    EntityMeta.of("", Arrays.asList(
-        new PropertyDefinition("test")
-    ), Collections.emptyList());
+  @Test
+  public void testShouldCreateEntityMetaWithDefaultIdPoperty() throws Exception {
+    EntityMeta meta = EntityMeta.of(SampleBean.class).build();
+    assertThat(meta.getIdPropertyName(), is(EntityMeta.DEFAULT_ID_PROPERTY_NAME));
   }
 
-  @Test(expected = IllegalArgumentException.class)
-  public void testShouldThrowIfDefinitionsAreNull() throws Exception {
-    EntityMeta.of("title", null, Collections.emptyList());
+  @Test
+  public void testShouldSetOverrides() throws Exception {
+    Collection<PropertyDefinition> overrides = new ArrayList<>();
+    EntityMeta meta = EntityMeta.of(SampleBean.class)
+        .overrides(overrides)
+        .build();
+    assertThat(meta.getOverrides(), is(overrides));
   }
 
-  @Test(expected = IllegalArgumentException.class)
-  public void testShouldThrowIfSkippedPropertiesAreNull() throws Exception {
-    EntityMeta.of("title", Arrays.asList(
-        new PropertyDefinition("test")
-    ), null);
+  @Test
+  public void testShouldMakeADefensiveCopyOfOverrides() throws Exception {
+    Collection<PropertyDefinition> overrides = new ArrayList<>();
+    EntityMeta meta = EntityMeta.of(SampleBean.class)
+        .overrides(overrides)
+        .build();
+    assertThat(meta.getOverrides(), is(not(sameInstance(overrides))));
   }
 
-  @Test(expected = IllegalArgumentException.class)
-  public void testShouldThrowWhenCreatingFromNullClass() throws Exception {
-    EntityMeta.of(null);
+  @Test
+  public void testShouldSetSkips() throws Exception {
+    Collection<String> skips = new ArrayList<>();
+    EntityMeta meta = EntityMeta.of(SampleBean.class)
+        .skips(skips)
+        .build();
+    assertThat(meta.getSkippedProperties(), is(skips));
   }
 
-  @Test(expected = IllegalArgumentException.class)
-  public void testShouldThrowWhenCreatingFromOptionalsWithNullTitle() throws Exception {
-    Optional<String> title = null;
-    Optional<Collection<PropertyDefinition>> overrides = Optional.empty();
-    Optional<Collection<String>> skipped = Optional.empty();
-    EntityMeta.of(SampleBean.class, title, overrides, skipped);
+  @Test
+  public void testShouldMakeADefensiveCopyOfSkips() throws Exception {
+    Collection<String> skips = new ArrayList<>();
+    EntityMeta meta = EntityMeta.of(SampleBean.class)
+        .skips(skips)
+        .build();
+    assertThat(meta.getSkippedProperties(), is(not(sameInstance(skips))));
   }
 
-  @Test(expected = IllegalArgumentException.class)
-  public void testShouldThrowWhenCreatingFromOptionalsWithNullOverrides() throws Exception {
-    Optional<String> title = Optional.empty();
-    Optional<Collection<PropertyDefinition>> overrides = null;
-    Optional<Collection<String>> skipped = Optional.empty();
-    EntityMeta.of(SampleBean.class, title, overrides, skipped);
-  }
-
-  @Test(expected = IllegalArgumentException.class)
-  public void testShouldThrowWhenCreatingFromOptionalsWithNullSkipped() throws Exception {
-    Optional<String> title = Optional.empty();
-    Optional<Collection<PropertyDefinition>> overrides = Optional.empty();
-    Optional<Collection<String>> skipped = null;
-    EntityMeta.of(SampleBean.class, title, overrides, skipped);
+  @Test
+  public void testShouldSetIdPropertyName() throws Exception {
+    EntityMeta meta = EntityMeta.of(SampleBean.class)
+        .idPropertyName("code")
+        .build();
+    assertThat(meta.getIdPropertyName(), is("code"));
   }
 
 
   @Test
-  public void testShouldSkipProperty() throws Exception {
-    EntityMeta meta = EntityMeta.of(SampleBean.class, Arrays.asList("secret"));
-    assertThat(meta.getSkippedProperties().size(), is(1));
+  public void testShouldSetTitle() throws Exception {
+    EntityMeta meta = EntityMeta.of(SampleBean.class).title("Test").build();
+    assertThat(meta.getTitle(), is("Test"));
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testShouldThrowOnNullOverrides() throws Exception {
+    Collection<PropertyDefinition> overrides = null;
+    EntityMeta.of(SampleBean.class).overrides(overrides);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testShouldThrowOnNullSkips() throws Exception {
+    Collection<String> skips = null;
+    EntityMeta.of(SampleBean.class).skips(skips);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testShouldThrowOnNullIdPropertyName() throws Exception {
+    EntityMeta.of(SampleBean.class).idPropertyName(null);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testShouldThrowOnEmptyIdPropertyName() throws Exception {
+    EntityMeta.of(SampleBean.class).idPropertyName("");
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testShouldThrowOnNullTitle() throws Exception {
+    EntityMeta.of(SampleBean.class).title(null);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testShouldThrowOnEmptyTitle() throws Exception {
+    EntityMeta.of(SampleBean.class).title("");
   }
 }

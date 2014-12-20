@@ -3,75 +3,62 @@ package org.github.nyrkovalex.ironadmin.core.pages;
 import org.github.nyrkovalex.ironadmin.core.EntityProvider;
 
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Optional;
 
-public abstract class AbstractPageBuilder<E> implements PageBuilder<E> {
-  private final Class<E> entityClass;
-  private Optional<String> title;
-  private Optional<String> url;
-  private Collection<PropertyDefinition> overrides;
-  private EntityProvider<E> entityProvider;
-  private Collection<String> skipped;
+public abstract class AbstractPageBuilder<T, ID> implements PageBuilder<T, ID> {
+  private final Class<T> entityClass;
+  private final EntityMeta.Builder entityMetaBuilder;
+  private PageMapping url;
+  private EntityProvider<T, ID> entityProvider;
 
-  protected AbstractPageBuilder(Class<E> entityClass) {
+  protected AbstractPageBuilder(Class<T> entityClass) {
     this.entityClass = entityClass;
-    overrides = Collections.emptyList();
-    title = Optional.empty();
+    this.entityMetaBuilder = EntityMeta.of(entityClass);
+    this.url = PageMapping.of(entityClass);
   }
 
   @Override
-  public AbstractPageBuilder<E> titled(String title) {
-    this.title = Optional.of(title);
+  public AbstractPageBuilder<T, ID> titled(String title) {
+    entityMetaBuilder.title(title);
     return this;
   }
 
   @Override
-  public AbstractPageBuilder<E> putAt(String url) {
-    this.url = Optional.of(url);
+  public AbstractPageBuilder<T, ID> putAt(String url) {
+    this.url = PageMapping.of(url);
     return this;
   }
 
   @Override
-  public AbstractPageBuilder<E> override(PropertyDefinition... overrides) {
-    this.overrides = Arrays.asList(overrides);
+  public AbstractPageBuilder<T, ID> override(PropertyDefinition... overrides) {
+    entityMetaBuilder.overrides(Arrays.asList(overrides));
     return this;
   }
 
   @Override
-  public AbstractPageBuilder<E> backedBy(EntityProvider<E> entityProvider) {
+  public AbstractPageBuilder<T, ID> backedBy(EntityProvider<T, ID> entityProvider) {
     this.entityProvider = entityProvider;
     return this;
   }
 
   @Override
-  public PageBuilder<E> skip(String... propertyNames) {
-    this.skipped = Arrays.asList(propertyNames);
+  public PageBuilder<T, ID> skip(String... propertyNames) {
+    entityMetaBuilder.skips(Arrays.asList(propertyNames));
     return this;
   }
 
-  protected Class<E> getEntityClass() {
+  protected Class<T> getEntityClass() {
     return entityClass;
   }
 
   protected EntityMeta getEntityMeta() {
-    return EntityMeta.of(
-        entityClass,
-        title,
-        Optional.ofNullable(overrides),
-        Optional.ofNullable(skipped)
-    );
+    return entityMetaBuilder.build();
   }
 
-  protected PageUrl getUrl() {
-    if (url.isPresent()) {
-      return PageUrl.of(url.get());
-    }
-    return PageUrl.of(entityClass);
+  protected PageMapping getUrl() {
+    return url;
   }
 
-  protected EntityProvider<E> getEntityProvider() {
+  protected EntityProvider<T, ID> getEntityProvider() {
     return entityProvider;
   }
 

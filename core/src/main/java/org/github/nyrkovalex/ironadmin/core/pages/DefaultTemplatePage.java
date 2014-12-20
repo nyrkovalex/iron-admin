@@ -3,22 +3,35 @@ package org.github.nyrkovalex.ironadmin.core.pages;
 import org.github.nyrkovalex.ironadmin.core.EntityProvider;
 import org.jetbrains.annotations.NotNull;
 
-public class DefaultTemplatePage<T> extends AbstractPage<T> implements Page<T> {
-  public static final String DEFAULT_TEMPLATE_NAME = "default";
+public class DefaultTemplatePage<T, ID> extends AbstractPage<T, ID> implements Page<T, ID> {
+  public static final String DEFAULT_TEMPLATE_NAME = "index";
 
-  public DefaultTemplatePage(@NotNull Class<T> entityClass, @NotNull EntityProvider<T> entityProvider) {
+  protected DefaultTemplatePage(@NotNull Class<T> entityClass,
+                                @NotNull EntityProvider<T, ID> entityProvider)
+  {
     super(entityClass, entityProvider);
   }
 
-  public DefaultTemplatePage(@NotNull Class<T> entityClass, @NotNull EntityProvider<T> entityProvider, @NotNull PageUrl pageUrl) {
-    super(entityClass, entityProvider, pageUrl);
+  protected DefaultTemplatePage(@NotNull Class<T> entityClass,
+                                @NotNull EntityProvider<T, ID> entityProvider,
+                                @NotNull PageMapping pageMapping)
+  {
+    super(entityClass, entityProvider, pageMapping);
   }
 
   protected DefaultTemplatePage(@NotNull Class<T> entityClass,
-                                @NotNull EntityProvider<T> entityProvider,
-                                @NotNull PageUrl meta,
-                                @NotNull EntityMeta entityMeta) {
-    super(entityClass, entityProvider, meta, entityMeta);
+                                @NotNull EntityProvider<T, ID> entityProvider,
+                                @NotNull EntityMeta meta)
+  {
+    super(entityClass, entityProvider, meta);
+  }
+
+  protected DefaultTemplatePage(@NotNull Class<T> entityClass,
+                                @NotNull EntityProvider<T, ID> entityProvider,
+                                @NotNull PageMapping url,
+                                @NotNull EntityMeta entityMeta)
+  {
+    super(entityClass, entityProvider, url, entityMeta);
   }
 
   @NotNull
@@ -27,18 +40,18 @@ public class DefaultTemplatePage<T> extends AbstractPage<T> implements Page<T> {
     return DEFAULT_TEMPLATE_NAME;
   }
 
-  public static <E> PageBuilder<E> of(Class<E> entityClass) {
+  public static <E, K> PageBuilder<E, K> of(Class<E> entityClass) {
     return new DefaultPageBuilder<>(entityClass);
   }
 
-  public static class DefaultPageBuilder<E> extends AbstractPageBuilder<E> {
+  public static class DefaultPageBuilder<E, K> extends AbstractPageBuilder<E, K> {
 
     public DefaultPageBuilder(Class<E> entityClass) {
       super(entityClass);
     }
 
     @Override
-    public Page<E> build() {
+    public Page<E, K> build() {
       return new DefaultTemplatePage<>(
           getEntityClass(), getEntityProvider(), getUrl(), getEntityMeta()
       );

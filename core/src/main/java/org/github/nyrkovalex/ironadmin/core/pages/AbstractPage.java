@@ -11,44 +11,57 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public abstract class AbstractPage<T> implements Page<T> {
+public abstract class AbstractPage<T, ID> implements Page<T, ID> {
   private final String title;
   private final String url;
   private final Class<T> entityClass;
-  private final EntityProvider<T> entityProvider;
+  private final EntityProvider<T, ID> entityProvider;
   private final Collection<String> skippedProperties;
   private final Map<String, PropertyDefinition> definitionOverrides;
+  private final String idPropertyName;
 
   protected AbstractPage(@NotNull Class<T> entityClass,
-                         @NotNull EntityProvider<T> entityProvider) {
-    this(entityClass, entityProvider, PageUrl.of(entityClass), EntityMeta.of(entityClass));
+                         @NotNull EntityProvider<T, ID> entityProvider)
+  {
+    this(entityClass, entityProvider, PageMapping.of(entityClass), EntityMeta.of(entityClass).build());
   }
 
 
   protected AbstractPage(@NotNull Class<T> entityClass,
-                         @NotNull EntityProvider<T> entityProvider,
-                         @NotNull PageUrl pageUrl) {
-    this(entityClass, entityProvider, pageUrl, EntityMeta.of(entityClass));
+                         @NotNull EntityProvider<T, ID> entityProvider,
+                         @NotNull PageMapping pageMapping)
+  {
+    this(entityClass, entityProvider, pageMapping, EntityMeta.of(entityClass).build());
   }
 
   protected AbstractPage(@NotNull Class<T> entityClass,
-                         @NotNull EntityProvider<T> entityProvider,
-                         @NotNull PageUrl pageUrl,
-                         @NotNull EntityMeta entityMeta) {
-    validateContracts(entityClass, entityProvider, pageUrl, entityMeta);
+                         @NotNull EntityProvider<T, ID> entityProvider,
+                         @NotNull EntityMeta meta)
+  {
+    this(entityClass, entityProvider, PageMapping.of(entityClass), meta);
+  }
+
+  protected AbstractPage(@NotNull Class<T> entityClass,
+                         @NotNull EntityProvider<T, ID> entityProvider,
+                         @NotNull PageMapping pageMapping,
+                         @NotNull EntityMeta entityMeta)
+  {
+    validateContracts(entityClass, entityProvider, pageMapping, entityMeta);
 
     this.title = entityMeta.getTitle();
-    this.url = pageUrl.getUrl();
+    this.url = pageMapping.getUrl();
     this.entityClass = entityClass;
     this.entityProvider = entityProvider;
     this.skippedProperties = entityMeta.getSkippedProperties();
     this.definitionOverrides = buildOverridesMap(entityMeta.getOverrides());
+    this.idPropertyName = entityMeta.getIdPropertyName();
   }
 
   private static void validateContracts(Class<?> entityClass,
-                                        EntityProvider<?> entityProvider,
-                                        PageUrl meta,
-                                        EntityMeta entityMeta) {
+                                        EntityProvider<?, ?> entityProvider,
+                                        PageMapping meta,
+                                        EntityMeta entityMeta)
+  {
     IronContracts.notNull(entityClass, "Entity class");
     IronContracts.notNull(entityProvider, "Entity provider");
     IronContracts.notNull(meta, "Page meta");
@@ -85,7 +98,13 @@ public abstract class AbstractPage<T> implements Page<T> {
 
   @NotNull
   @Override
-  public EntityProvider getProvider() {
+  public EntityProvider<T, ID> getProvider() {
     return entityProvider;
+  }
+
+  @NotNull
+  @Override
+  public String getIdPropertyName() {
+    return idPropertyName;
   }
 }

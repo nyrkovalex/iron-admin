@@ -4,22 +4,30 @@ import org.github.nyrkovalex.ironutils.IronContracts;
 import org.github.nyrkovalex.ironutils.IronStrings;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Optional;
+
 
 public class EntityMeta {
+
+  public static final String DEFAULT_ID_PROPERTY_NAME = "id";
 
   private final String title;
   private final Collection<PropertyDefinition> overrides;
   private final Collection<String> skippedProperties;
+  private final String idPropertyName;
 
   private EntityMeta(String title,
                      Collection<PropertyDefinition> overrides,
-                     Collection<String> skippedProperties) {
+                     Collection<String> skippedProperties,
+                     String idPropertyName)
+  {
     this.title = title;
     this.overrides = overrides;
     this.skippedProperties = skippedProperties;
+    this.idPropertyName = idPropertyName;
   }
 
   public Collection<PropertyDefinition> getOverrides() {
@@ -34,52 +42,64 @@ public class EntityMeta {
     return title;
   }
 
-  public static EntityMeta of(@NotNull Class<?> entityClass) {
-    return of(entityClass,
-        Optional.<Collection<PropertyDefinition>>empty(), Optional.<Collection<String>>empty()
-    );
+
+  public String getIdPropertyName() {
+    return idPropertyName;
   }
 
-  public static EntityMeta of(@NotNull Class<?> entityClass,
-                              @NotNull Collection<String> skippedProperties) {
-    IronContracts.notNull(skippedProperties, "skipped properties");
-
-    return of(entityClass,
-        Optional.<Collection<PropertyDefinition>>empty(), Optional.of(skippedProperties)
-    );
+  public static Builder of(@NotNull Class<?> entityClass) {
+    return new Builder(entityClass);
   }
 
-  public static EntityMeta of(@NotNull Class<?> entityClass,
-                              @NotNull Optional<Collection<PropertyDefinition>> overrides,
-                              @NotNull Optional<Collection<String>> skippedProperties) {
-    return of(entityClass, Optional.empty(), overrides, skippedProperties);
-  }
+  public static final class Builder {
 
-  public static EntityMeta of(@NotNull Class<?> entityClass,
-                              @NotNull Optional<String> title,
-                              @NotNull Optional<Collection<PropertyDefinition>> overrides,
-                              @NotNull Optional<Collection<String>> skippedProperties) {
-    IronContracts.notNull(entityClass, "class", title, "title");
-    IronContracts.notNull(overrides, "overrides", skippedProperties, "skipped");
+    private String title;
+    private Collection<PropertyDefinition> overrides;
+    private Collection<String> skippedProperties;
+    private String idPropertyName;
 
-    Collection<String> skippedValue = skippedProperties.orElse(Collections.emptyList());
-    Collection<PropertyDefinition> overridesValue = overrides.orElse(Collections.emptyList());
-
-    if (title.isPresent()) {
-      String titleValue = title.get();
-      return of(titleValue, overridesValue, skippedValue);
+    public Builder(@NotNull Class<?> entityClass) {
+      IronContracts.notNull(entityClass, "entity class");
+      this.title = IronStrings.camelCaseToSentence(entityClass.getSimpleName());
+      overrides = Collections.emptyList();
+      skippedProperties = Collections.emptyList();
+      idPropertyName = DEFAULT_ID_PROPERTY_NAME;
     }
 
-    return of(IronStrings.camelCaseToSentence(entityClass.getSimpleName()),
-        overridesValue, skippedValue);
-  }
+    public Builder overrides(@NotNull Collection<PropertyDefinition> overrides) {
+      IronContracts.notNull(overrides, "overrides");
+      this.overrides = new ArrayList<>(overrides);
+      return this;
+    }
 
-  public static EntityMeta of(@NotNull String title,
-                              @NotNull Collection<PropertyDefinition> overrides,
-                              @NotNull Collection<String> skippedProperties) {
-    IronContracts.notNullOrEmpty(title, "title");
-    IronContracts.notNull(overrides, "overrides", skippedProperties, "skipped properties");
+    public Builder overrides(PropertyDefinition... overrides) {
+      return overrides(Arrays.asList(overrides));
+    }
 
-    return new EntityMeta(title, overrides, skippedProperties);
+    public Builder skips(@NotNull Collection<String> skips) {
+      IronContracts.notNull(skips, "skips");
+      this.skippedProperties = new ArrayList<>(skips);
+      return this;
+    }
+
+    public Builder skips(String... skips) {
+      return skips(Arrays.asList(skips));
+    }
+
+    public Builder idPropertyName(String idPropertyName) {
+      IronContracts.notNullOrEmpty(idPropertyName, "id property name");
+      this.idPropertyName = idPropertyName;
+      return this;
+    }
+
+    public Builder title(String title) {
+      IronContracts.notNullOrEmpty(title, "title");
+      this.title = title;
+      return this;
+    }
+
+    public EntityMeta build() {
+      return new EntityMeta(title, overrides, skippedProperties, idPropertyName);
+    }
   }
 }

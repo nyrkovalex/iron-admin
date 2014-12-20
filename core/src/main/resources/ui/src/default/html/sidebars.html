@@ -1,0 +1,27 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+
+<!--suppress ALL -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<body>
+<div th:fragment="ia-sidebar-left" class="ia-sidebar-left">
+  <div class="ia-container">
+    <h1 th:text="${ ia.title }">Admin title</h1>
+  </div>
+  <nav>
+    <ul>
+      <li th:each="p : ${ ia.pages }" th:class="${ p.url == page.url } ? ia-active : '' ">
+        <a th:text="${ p.title }" th:href="${ iaUrl.resolve(p.url) }">Page title</a>
+      </li>
+    </ul>
+  </nav>
+</div>
+<aside th:fragment="ia-sidebar-right" class="ia-sidebar-right">
+  <div class="ia-container">
+    <h2>Filters</h2>
+  </div>
+</aside>
+</body>
+
+</html>

@@ -48,4 +48,10 @@ public class DummyPage implements Page {
   public EntityProvider getProvider() {
     return null;
   }
+
+  @NotNull
+  @Override
+  public String getIdPropertyName() {
+    return null;
+  }
 }

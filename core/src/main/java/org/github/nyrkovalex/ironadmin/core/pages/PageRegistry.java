@@ -31,7 +31,7 @@ public interface PageRegistry {
    * @return itself for chained invocations
    */
   @NotNull
-  PageRegistry register(@NotNull Page... pages);
+  PageRegistry register(@NotNull Page<?, ?>... pages);
 
   /**
    * Returns all pages registered within current registry
