@@ -12,26 +12,28 @@ import org.github.nyrkovalex.ironadmin.example.users.UsersPage;
 import org.github.nyrkovalex.ironadmin.server.IronAdminServer;
 
 public class Main {
-    public static void main(String... args) {
-        AdminContext context = DefaultContext.getInstance();
-        context.setTitle("Example Admin");
+  public static void main(String... args) {
+    AdminContext context = DefaultContext.getInstance();
+    context.setTitle("Example Admin");
 
-        PageRegistry pageRegistry = context.getRegistry();
-        pageRegistry.register(
-                new UsersPage(),
-                new GroupsPage(),
-                DefaultTemplatePage
-                        .createFor(Comment.class)
-                        .titled("Comments")
-                        .putAt("/comments")
-                        .skip("id")
-                        .override(new PropertyDefinition("createdDate", "Posted On"))
-                        .backedBy(new CommentProvider())
-                        .build()
-        );
+    PageRegistry pageRegistry = context.getRegistry();
+    pageRegistry.register(
+        new UsersPage(),
+        new GroupsPage(),
+        DefaultTemplatePage
+            .of(Comment.class)
+            .titled("Comments")
+            .putAt("/comments")
+            .skip("id")
+            .override(new PropertyDefinition(
+                "createdDate",
+                "Posted On"))
+            .backedBy(new CommentProvider())
+            .build()
+    );
 
-        IronAdminServer server = new IronAdminServer(8080, "/admin/*");
-        server.start();
-    }
+    IronAdminServer server = new IronAdminServer(8080, "/admin/*");
+    server.start();
+  }
 
 }

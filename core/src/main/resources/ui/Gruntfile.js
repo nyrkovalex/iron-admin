@@ -1,8 +1,8 @@
-module.exports = function(grunt) {
+module.exports = function (grunt) {
 
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
-        clean: [ 'templates '],
+        clean: ['templates '],
         less: {
             'templates/default/css/iron-admin.css': 'src/default/less/iron-admin.less'
         },
@@ -10,7 +10,7 @@ module.exports = function(grunt) {
             main: {
                 cwd: 'src/',
                 expand: true,
-                src: [ '**/css/*', '**/html/*' ],
+                src: ['**/css/*', '**/html/*'],
                 dest: 'templates/'
             }
         },
@@ -18,7 +18,7 @@ module.exports = function(grunt) {
             files: [
                 'src/**/*.html', 'src/**/*.css', 'src/**/*.js'
             ],
-            tasks: [ 'clean', 'less', 'copy' ]
+            tasks: ['clean', 'less', 'copy']
         }
     });
 
