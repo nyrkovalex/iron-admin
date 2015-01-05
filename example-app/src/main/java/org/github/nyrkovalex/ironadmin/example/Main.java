@@ -1,8 +1,8 @@
 package org.github.nyrkovalex.ironadmin.example;
 
 import org.github.nyrkovalex.ironadmin.core.AdminContext;
-import org.github.nyrkovalex.ironadmin.core.defaults.DefaultContext;
-import org.github.nyrkovalex.ironadmin.core.pages.DefaultTemplatePage;
+import org.github.nyrkovalex.ironadmin.core.defaults.DefaultAdminContext;
+import org.github.nyrkovalex.ironadmin.core.defaults.DefaultTemplatePage;
 import org.github.nyrkovalex.ironadmin.core.pages.PageRegistry;
 import org.github.nyrkovalex.ironadmin.core.pages.PropertyDefinition;
 import org.github.nyrkovalex.ironadmin.example.comments.Comment;
@@ -10,8 +10,6 @@ import org.github.nyrkovalex.ironadmin.example.comments.CommentProvider;
 import org.github.nyrkovalex.ironadmin.example.groups.GroupsPage;
 import org.github.nyrkovalex.ironadmin.example.users.UsersPage;
 import org.github.nyrkovalex.ironadmin.server.IronAdminServer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Date;
 import java.util.logging.Formatter;
@@ -20,21 +18,19 @@ import java.util.logging.Level;
 import java.util.logging.LogRecord;
 
 public class Main {
-    private final static Logger LOG = LoggerFactory.getLogger(Main.class);
 
-    public static void main(String... args) {
+    public static void main(String[] args) {
 
         setupLogging();
 
-        AdminContext context = DefaultContext.getInstance();
+        AdminContext context = DefaultAdminContext.instance();
         context.setTitle("Example Admin");
 
-        PageRegistry pageRegistry = context.getRegistry();
+        PageRegistry pageRegistry = context.pageRegistry();
         pageRegistry.register(
                 new UsersPage(),
                 new GroupsPage(),
-                DefaultTemplatePage
-                        .<Comment, Integer>of(Comment.class)
+                DefaultTemplatePage.of(Comment.class)
                         .titled("Comments")
                         .putAt("/comments")
                         .skip("id")
@@ -55,7 +51,7 @@ public class Main {
                 @Override
                 public String format(LogRecord record) {
                     return String.format(
-                            "%s [ %s ] - %s: %s",
+                            "%s [ %s ] - %s: %s\n",
                             new Date(record.getMillis()),
                             record.getLevel(),
                             record.getSourceClassName(),

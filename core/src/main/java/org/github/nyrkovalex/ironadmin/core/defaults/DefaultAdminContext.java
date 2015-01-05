@@ -2,31 +2,31 @@ package org.github.nyrkovalex.ironadmin.core.defaults;
 
 import org.github.nyrkovalex.ironadmin.core.AdminContext;
 import org.github.nyrkovalex.ironadmin.core.TemplateResolver;
-import org.github.nyrkovalex.ironadmin.core.pages.Page;
 import org.github.nyrkovalex.ironadmin.core.pages.PageRegistry;
 import org.jetbrains.annotations.NotNull;
 
-public class DefaultContext implements AdminContext {
-    private static DefaultContext instance = new DefaultContext();
+public class DefaultAdminContext implements AdminContext {
+    private static final DefaultAdminContext INSTANCE = new DefaultAdminContext();
 
     private final DefaultPageRegistry pageRegistry;
     private final ThymeleafTemplateResolver templateResolver;
-    private final IronAdminEnvironment env;
+    private final EnvironmentContext env;
 
-    private DefaultContext() {
+    private DefaultAdminContext() {
         pageRegistry = new DefaultPageRegistry();
-        env = new IronAdminEnvironment(pageRegistry);
+        env = new EnvironmentContext(pageRegistry);
         templateResolver = new ThymeleafTemplateResolver(env);
     }
 
     @NotNull
     @Override
-    public PageRegistry getRegistry() {
+    public PageRegistry pageRegistry() {
         return pageRegistry;
     }
 
     @NotNull
-    public TemplateResolver getTemplateResolver() {
+    @Override
+    public TemplateResolver templateResolver() {
         return templateResolver;
     }
 
@@ -37,16 +37,11 @@ public class DefaultContext implements AdminContext {
 
     @NotNull
     @Override
-    public String getTitle() {
+    public String title() {
         return env.getTitle();
     }
 
-    @Override
-    public void register(@NotNull Page... pages) {
-        pageRegistry.register(pages);
-    }
-
-    public static DefaultContext getInstance() {
-        return instance;
+    public static DefaultAdminContext instance() {
+        return INSTANCE;
     }
 }

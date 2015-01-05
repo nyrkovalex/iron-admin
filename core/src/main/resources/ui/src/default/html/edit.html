@@ -4,11 +4,109 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 
+<head>
+    <link rel="stylesheet" href="../../../templates/default/css/reset.css"/>
+    <link rel="stylesheet" href="../../../templates/default/css/iron-admin.css"/>
+    <title th:text="${ia.title}">Admin title</title>
+
+    <script>
+        (function (window) {
+            'use strict';
+
+            var model = Object.create({
+                save: function (e) {
+                    var self = this, properties;
+
+                    e.preventDefault();
+                    properties = Object.keys(self).map(function (k) {
+                        return k + ': ' + self[k];
+                    });
+                    alert('Submitted:\n' + properties.join('\n'));
+                },
+
+                delete: function () {
+                    alert('deleted');
+                }
+            });
+
+            window.ia = {
+                model: model,
+
+                bindInput: function (inputElement, model) {
+                    var propertyName = inputElement.getAttribute('name'),
+                            propertyType = inputElement.getAttribute('type'),
+                            getter, setter;
+
+                    getter = (function () {
+                        switch (propertyType) {
+                        case 'number':
+                            return function (v) {
+                                return Number(v);
+                            };
+                        case 'text': //fallthrough
+                        default:
+                            return function (v) {
+                                return v;
+                            }
+                        }
+                    }());
+
+                    setter = function () {
+                        model[propertyName] = getter(inputElement.value);
+                    };
+
+                    setter();
+                    inputElement.addEventListener('input', setter);
+                }
+            };
+
+            document.addEventListener("DOMContentLoaded", function () {
+                var inputs = document.querySelectorAll('input');
+
+                Array.prototype.forEach.apply(inputs, [function (e) {
+                    ia.bindInput(e, ia.model);
+                }]);
+
+                console.log(model);
+            });
+
+        }(window));
+
+    </script>
+
+</head>
+
 <body>
 
-<div th:fragment="ia-edit-form">
-    Edit form here
-</div>
+<div th:replace="ui/templates/default/html/sidebars.html :: ia-sidebar-left"></div>
+<article class="ia-content">
+    <div class="ia-container">
+        <header>
+            <h2>
+                <span th:text="${ page.title }">Page title</span>
+                <small th:text="${ page.entity.__${ page.idPropertyName }__ }">Entity ID</small>
+            </h2>
+        </header>
+
+        <form class="ia-edit-form" onsubmit="ia.model.save(event)">
+            <div th:each="property : ${ page.properties }">
+                <label>
+                    <span th:text="${ property.displayName }">Property Name</span>
+                    <input name="template" value="42"
+                           th:name="${ property.name }"
+                           th:value="${ page.entity.__${ property.name }__ }"/>
+                </label>
+            </div>
+
+            <footer>
+                <button type="submit">Save</button>
+                <button type="button" onclick="ia.model.delete()">Delete</button>
+            </footer>
+
+        </form>
+    </div>
+</article>
 
 </body>
+
 </html>

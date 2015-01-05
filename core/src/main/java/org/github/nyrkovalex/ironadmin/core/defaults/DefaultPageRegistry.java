@@ -6,12 +6,12 @@ import org.github.nyrkovalex.ironutils.IronContracts;
 import org.github.nyrkovalex.ironutils.IronMaps;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
 
 class DefaultPageRegistry implements PageRegistry {
+
     private final Map<String, Page> pages;
 
     DefaultPageRegistry() {
@@ -20,7 +20,7 @@ class DefaultPageRegistry implements PageRegistry {
 
     @NotNull
     @Override
-    public Optional<Page> getPage(String url) {
+    public Optional<Page> pageFor(String url) {
         return Optional.ofNullable(pages.get(url));
     }
 
@@ -28,7 +28,7 @@ class DefaultPageRegistry implements PageRegistry {
     @Override
     public PageRegistry register(@NotNull Page page) {
         IronContracts.notNull(page, "page");
-        IronMaps.putOrThrowIfPresent(pages, page.getUrl(), page);
+        IronMaps.putOrThrowIfPresent(pages, page.url(), page);
         return this;
     }
 
@@ -42,9 +42,11 @@ class DefaultPageRegistry implements PageRegistry {
         return this;
     }
 
-    @NotNull
     @Override
-    public Collection<Page> getPages() {
-        return pages.values();
+    @NotNull
+    public Map<String, String> pageMap() {
+        Map<String, String> result = new LinkedHashMap<>(pages.size());
+        pages.values().stream().forEach((p) -> result.put(p.url(), p.title()));
+        return result;
     }
 }

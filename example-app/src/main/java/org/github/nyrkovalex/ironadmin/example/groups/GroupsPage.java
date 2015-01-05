@@ -1,13 +1,13 @@
 package org.github.nyrkovalex.ironadmin.example.groups;
 
 import org.github.nyrkovalex.ironadmin.core.EntityProvider;
-import org.github.nyrkovalex.ironadmin.core.pages.DefaultTemplatePage;
+import org.github.nyrkovalex.ironadmin.core.defaults.DefaultTemplatePage;
 import org.github.nyrkovalex.ironadmin.core.pages.EntityMeta;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class GroupsPage extends DefaultTemplatePage<Group, String> {
+public class GroupsPage extends DefaultTemplatePage<Group> {
     public GroupsPage() {
         super(Group.class,
               new GroupProvider(),
@@ -17,7 +17,7 @@ public class GroupsPage extends DefaultTemplatePage<Group, String> {
              );
     }
 
-    private static class GroupProvider implements EntityProvider<Group, String> {
+    private static class GroupProvider implements EntityProvider<Group> {
 
         public static final List<Group> GROUPS = Arrays.asList(
                 new Group("administrators"),
@@ -30,7 +30,7 @@ public class GroupsPage extends DefaultTemplatePage<Group, String> {
         }
 
         @Override
-        public Group byId(String s) {
+        public Group one(String s) {
             return GROUPS.get(0);
         }
     }

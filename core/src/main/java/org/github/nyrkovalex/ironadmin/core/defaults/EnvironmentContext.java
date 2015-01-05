@@ -1,17 +1,16 @@
 package org.github.nyrkovalex.ironadmin.core.defaults;
 
-import org.github.nyrkovalex.ironadmin.core.pages.Page;
 import org.github.nyrkovalex.ironadmin.core.pages.PageRegistry;
 import org.github.nyrkovalex.ironutils.IronContracts;
 
-import java.util.Collection;
+import java.util.Map;
 
-class IronAdminEnvironment {
+class EnvironmentContext {
     public static final String DEFAULT_TITLE = "Iron Admin";
     private final PageRegistry pageRegistry;
     private String title;
 
-    public IronAdminEnvironment(PageRegistry pageRegistry) {
+    public EnvironmentContext(PageRegistry pageRegistry) {
         this.pageRegistry = pageRegistry;
         setTitle(DEFAULT_TITLE);
     }
@@ -25,7 +24,7 @@ class IronAdminEnvironment {
         this.title = title;
     }
 
-    public Collection<Page> getPages() {
-        return pageRegistry.getPages();
+    public Map<String, String> getPages() {
+        return pageRegistry.pageMap();
     }
 }

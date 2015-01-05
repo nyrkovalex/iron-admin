@@ -8,7 +8,7 @@ import javax.servlet.ServletException;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public abstract class AdminDispatcherServletTest {
+public abstract class AdminDispatcherServletTest extends UnitTest {
     private AdminDispatcherServlet dispatcherServlet;
     private ServletConfig servletConfig;
 

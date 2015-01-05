@@ -1,6 +1,6 @@
 package org.github.nyrkovalex.ironadmin.core;
 
-import org.github.nyrkovalex.ironadmin.core.pages.Page;
+import org.github.nyrkovalex.ironadmin.core.pages.PageContext;
 
 import java.io.Writer;
 
@@ -15,12 +15,12 @@ public interface TemplateResolver {
      * {@link org.github.nyrkovalex.ironadmin.core.TemplateResolver TemplateResolver} implementation with its
      * current path providing <code>urlPrefix</code> parameter.</p>
      *
-     * @param urlPrefix current mapping of
-     *                  {@link org.github.nyrkovalex.ironadmin.core.servlet.AdminDispatcherServlet AdminDispatcherServlet}.
-     *                  All relative links inside target <code>pages</code> must be prefixed with tis path.
-     * @param page      current admin pages
-     * @param writer    writer to write resolved template to. Most likely but not necessary
-     *                  {@link java.io.PrintWriter PrintWriter} from {@link javax.servlet.http.HttpServletResponse HttpServletResponse}
+     * @param urlPrefix   current mapping of
+     *                    {@link org.github.nyrkovalex.ironadmin.core.servlet.AdminDispatcherServlet AdminDispatcherServlet}.
+     *                    All relative links inside target <code>pages</code> must be prefixed with tis path.
+     * @param pageContext current admin page context
+     * @param writer      writer to write resolved template to. Most likely but not necessary
+     *                    {@link java.io.PrintWriter PrintWriter} from {@link javax.servlet.http.HttpServletResponse HttpServletResponse}
      */
-    void resolvePageTemplate(String urlPrefix, Page page, Writer writer);
+    void resolvePageTemplate(String urlPrefix, PageContext pageContext, Writer writer);
 }

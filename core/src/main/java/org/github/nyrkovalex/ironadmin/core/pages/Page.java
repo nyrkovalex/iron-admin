@@ -10,20 +10,19 @@ import java.util.List;
  * and register its implementation within {@link org.github.nyrkovalex.ironadmin.core.pages.PageRegistry PageRegistry}
  * implementation retrieved from {@link org.github.nyrkovalex.ironadmin.core.AdminContext AdminContext}.
  *
- * @param <T>  type of an entity this page belongs to
- * @param <ID> type of an entity id property
+ * @param <T> type of an entity this page belongs to
  * @see org.github.nyrkovalex.ironadmin.core.pages.PageRegistry PageRegistry
  * @see org.github.nyrkovalex.ironadmin.core.AdminContext AdminContext
- * @see org.github.nyrkovalex.ironadmin.core.defaults.DefaultContext DefaultContext
+ * @see org.github.nyrkovalex.ironadmin.core.defaults.DefaultAdminContext DefaultContext
  */
-public interface Page<T, ID> {
+public interface Page<T> {
     /**
      * Page title to be displayed in the menu and as a pages header
      *
      * @return title of the current pages
      */
     @NotNull
-    String getTitle();
+    String title();
 
     /**
      * <p>Url this pages will be mapped to. Expected to start from forward slash character.</p>
@@ -39,26 +38,17 @@ public interface Page<T, ID> {
      * @see org.github.nyrkovalex.ironadmin.core.servlet.AdminDispatcherServlet AdminDispatcherServlet
      */
     @NotNull
-    String getUrl();
-
-    /**
-     * Name of a template used to render current pages. This value may differ depending on
-     * {@link org.github.nyrkovalex.ironadmin.core.TemplateResolver TemplateResolver} implementation
-     *
-     * @return name of a template used for this pages
-     * @see org.github.nyrkovalex.ironadmin.core.TemplateResolver TemplateResolver
-     * @see org.github.nyrkovalex.ironadmin.core.defaults.ThymeleafTemplateResolver ThymeleafTemplateResolver
-     * @see org.github.nyrkovalex.ironadmin.core.AdminContext AdminContext
-     */
-    @NotNull
-    String getTemplateName();
+    String url();
 
     @NotNull
-    List<PropertyDefinition> getProperties();
+    PageContext pageContextForRequest(PageRequest request);
 
     @NotNull
-    EntityProvider<T, ID> getProvider();
+    List<PropertyDefinition> properties();
 
     @NotNull
-    String getIdPropertyName();
+    EntityProvider<T> provider();
+
+    @NotNull
+    String idPropertyName();
 }

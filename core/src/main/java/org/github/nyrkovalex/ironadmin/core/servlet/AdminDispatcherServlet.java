@@ -1,8 +1,10 @@
 package org.github.nyrkovalex.ironadmin.core.servlet;
 
 import org.github.nyrkovalex.ironadmin.core.AdminContext;
-import org.github.nyrkovalex.ironadmin.core.defaults.DefaultContext;
+import org.github.nyrkovalex.ironadmin.core.defaults.DefaultAdminContext;
 import org.github.nyrkovalex.ironadmin.core.pages.Page;
+import org.github.nyrkovalex.ironadmin.core.pages.PageContext;
+import org.github.nyrkovalex.ironadmin.core.pages.PageRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,7 +20,7 @@ public class AdminDispatcherServlet extends HttpServlet {
     private static final Logger LOG = LoggerFactory.getLogger(AdminDispatcherServlet.class);
 
     static final String CONTEXT_CLASS_PARAMETER_NAME = "context-class";
-    static final String PAGE_ATTR_NAME = "ia-pages";
+    static final String PAGE_CONTEXT_ATTR = "ia-page-context";
 
     private AdminContext adminContext;
 
@@ -26,7 +28,7 @@ public class AdminDispatcherServlet extends HttpServlet {
     public void init(ServletConfig config) throws ServletException {
         String contextClassName = config.getInitParameter(CONTEXT_CLASS_PARAMETER_NAME);
         if (contextClassName == null || contextClassName.isEmpty()) {
-            this.adminContext = DefaultContext.getInstance();
+            this.adminContext = DefaultAdminContext.instance();
         } else {
             this.adminContext = loadContextForClassName(contextClassName);
         }
@@ -66,29 +68,29 @@ public class AdminDispatcherServlet extends HttpServlet {
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         LOG.debug("Got request to " + req.getRequestURI());
-        String pageUrl = getPageUrl(req);
-        Optional<Page> page = adminContext.getRegistry().getPage(pageUrl);
+        PageRequest request = getPageRequest(req);
+        Optional<Page> page = adminContext.pageRegistry().pageFor(request.pageUrl());
         if (page.isPresent()) {
-            req.setAttribute(PAGE_ATTR_NAME, page.get());
+            req.setAttribute(PAGE_CONTEXT_ATTR, page.get().pageContextForRequest(request));
             super.service(req, resp);
             return;
         }
         resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
     }
 
-    private String getPageUrl(HttpServletRequest req) {
+    private PageRequest getPageRequest(HttpServletRequest req) {
         String requestURI = req.getRequestURI();
-        String withoutServletPath = requestURI.replace(req.getServletPath(), "");
-        int secondSlashIndex = withoutServletPath.indexOf('/', 1);
-        return secondSlashIndex < 0
-               ? withoutServletPath
-               : withoutServletPath.substring(0, secondSlashIndex);
+        String withoutServletPath = requestURI.replace(req.getServletPath() + "/", "");
+        String[] splitted = withoutServletPath.split("/");
+        String pageUrl = "/" + (splitted.length > 0 ? splitted[0] : "");
+        String entityId = "" + (splitted.length > 1 ? splitted[1] : "");
+        return new PageRequest(pageUrl, entityId.isEmpty() ? Optional.empty() : Optional.of(entityId));
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Page page = (Page) req.getAttribute(PAGE_ATTR_NAME);
-        adminContext.getTemplateResolver().resolvePageTemplate(req.getServletPath(), page, resp.getWriter());
+        PageContext context = (PageContext) req.getAttribute(PAGE_CONTEXT_ATTR);
+        adminContext.templateResolver().resolvePageTemplate(req.getServletPath(), context, resp.getWriter());
         resp.setStatus(HttpServletResponse.SC_OK);
     }
 

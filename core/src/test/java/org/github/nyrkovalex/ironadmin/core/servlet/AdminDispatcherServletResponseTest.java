@@ -2,12 +2,13 @@ package org.github.nyrkovalex.ironadmin.core.servlet;
 
 import org.github.nyrkovalex.ironadmin.core.TemplateResolver;
 import org.github.nyrkovalex.ironadmin.core.pages.Page;
+import org.github.nyrkovalex.ironadmin.core.pages.PageContext;
 import org.github.nyrkovalex.ironadmin.core.pages.PageRegistry;
 import org.github.nyrkovalex.ironadmin.core.pages.dummy.DummyAdminContext;
 import org.github.nyrkovalex.ironadmin.core.pages.dummy.DummyFactory;
-import org.github.nyrkovalex.ironadmin.core.pages.dummy.DummyPage;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,7 +20,7 @@ import static org.mockito.Mockito.*;
 
 public class AdminDispatcherServletResponseTest extends AdminDispatcherServletTest {
 
-    private final DummyPage page = new DummyPage();
+    @Mock private PageContext pageContext;
     private AdminDispatcherServlet dispatcherServlet;
     private HttpServletRequest req;
     private HttpServletResponse res;
@@ -45,31 +46,31 @@ public class AdminDispatcherServletResponseTest extends AdminDispatcherServletTe
     private void buildRequest() {
         req = DummyFactory.getRequest();
         when(req.getServletPath()).thenReturn("/foo");
-        when(req.getAttribute(AdminDispatcherServlet.PAGE_ATTR_NAME)).thenReturn(page);
+        when(req.getAttribute(AdminDispatcherServlet.PAGE_CONTEXT_ATTR)).thenReturn(pageContext);
     }
 
     @Test
     public void testShouldResolveTemplate() throws Exception {
         dispatcherServlet.doGet(req, res);
         TemplateResolver resolver = DummyFactory.getResolver();
-        verify(resolver).resolvePageTemplate("/foo", page, writer);
+        verify(resolver).resolvePageTemplate("/foo", pageContext, writer);
     }
 
     @Test
     public void testShouldAskForCorrectPageWIthLongPath() throws Exception {
         PageRegistry registry = DummyFactory.getRegistry();
         when(req.getRequestURI()).thenReturn("/foo/bar/some/stuff/here");
-        when(registry.getPage("/bar")).thenReturn(Optional.<Page>empty());
+        when(registry.pageFor("/bar")).thenReturn(Optional.<Page>empty());
         dispatcherServlet.service(req, res);
-        verify(registry).getPage("/bar");
+        verify(registry).pageFor("/bar");
     }
 
     @Test
     public void testShouldAskForCorrectPageWithExactPath() throws Exception {
         PageRegistry registry = DummyFactory.getRegistry();
         when(req.getRequestURI()).thenReturn("/foo/bar");
-        when(registry.getPage("/bar")).thenReturn(Optional.<Page>empty());
+        when(registry.pageFor("/bar")).thenReturn(Optional.<Page>empty());
         dispatcherServlet.service(req, res);
-        verify(registry).getPage("/bar");
+        verify(registry).pageFor("/bar");
     }
 }

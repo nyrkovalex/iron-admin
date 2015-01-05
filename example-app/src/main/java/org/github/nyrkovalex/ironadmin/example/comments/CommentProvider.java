@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-public class CommentProvider implements EntityProvider<Comment, Integer> {
+public class CommentProvider implements EntityProvider<Comment> {
 
     public static final List<Comment> COMMENTS = Arrays.asList(
             new Comment(1, "dude@nowhere.com", "They gonna kill that poor woman", new Date()),
@@ -19,7 +19,7 @@ public class CommentProvider implements EntityProvider<Comment, Integer> {
     }
 
     @Override
-    public Comment byId(Integer integer) {
-        return COMMENTS.get(integer + 1);
+    public Comment one(String id) {
+        return COMMENTS.get(Integer.parseInt(id) - 1);
     }
 }

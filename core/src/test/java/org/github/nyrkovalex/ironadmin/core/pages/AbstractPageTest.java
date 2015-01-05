@@ -16,7 +16,7 @@ import static org.junit.Assert.assertThat;
 public class AbstractPageTest {
 
     private List<PropertyDefinition> properties;
-    private EntityProvider<SampleBean, Object> entityProvider;
+    private EntityProvider<SampleBean> entityProvider;
 
     @Before
     public void setUp() throws Exception {
@@ -29,30 +29,31 @@ public class AbstractPageTest {
                 .skips(Arrays.asList("secret"))
                 .build();
 
-        entityProvider = new EntityProvider<SampleBean, Object>() {
+        entityProvider = new EntityProvider<SampleBean>() {
             @Override
             public List<SampleBean> all() {
                 return Collections.emptyList();
             }
 
             @Override
-            public SampleBean byId(Object o) {
+            public SampleBean one(String o) {
                 return new SampleBean();
             }
         };
-        Page<SampleBean, Object> page = createAbstractPage(SampleBean.class, entityProvider, meta, entityMeta);
-        properties = page.getProperties();
+        Page<SampleBean> page = createAbstractPage(SampleBean.class, entityProvider, meta, entityMeta);
+        properties = page.properties();
     }
 
-    private AbstractPage<SampleBean, Object> createAbstractPage(Class<SampleBean> clazz,
-                                                                EntityProvider<SampleBean, Object> entityProvider,
-                                                                final PageMapping meta,
-                                                                final EntityMeta entityMeta) {
-        return new AbstractPage<SampleBean, Object>(clazz, entityProvider, meta, entityMeta) {
+    private AbstractPage<SampleBean> createAbstractPage(
+            Class<SampleBean> clazz,
+            EntityProvider<SampleBean> entityProvider,
+            final PageMapping meta,
+            final EntityMeta entityMeta) {
+        return new AbstractPage<SampleBean>(clazz, entityProvider, meta, entityMeta) {
             @NotNull
             @Override
-            public String getTemplateName() {
-                return "test";
+            public PageContext pageContextForRequest(PageRequest request) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
         };
     }

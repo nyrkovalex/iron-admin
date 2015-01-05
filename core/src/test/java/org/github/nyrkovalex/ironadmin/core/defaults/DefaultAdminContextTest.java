@@ -8,26 +8,26 @@ import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.junit.Assert.assertThat;
 
 @SuppressWarnings("ConstantConditions")
-public class DefaultContextTest {
+public class DefaultAdminContextTest {
 
-    private DefaultContext context;
+    private DefaultAdminContext context;
 
     @Before
     public void setUp() throws Exception {
-        context = DefaultContext.getInstance();
+        context = DefaultAdminContext.instance();
     }
 
 
     @Test
     public void testShouldBeASingleton() throws Exception {
-        DefaultContext context2 = DefaultContext.getInstance();
+        DefaultAdminContext context2 = DefaultAdminContext.instance();
         assertThat(context, sameInstance(context2));
     }
 
     @Test
     public void testShouldSetValidTitle() throws Exception {
         context.setTitle("New title");
-        assertThat(context.getTitle(), is("New title"));
+        assertThat(context.title(), is("New title"));
     }
 
     @Test(expected = IllegalArgumentException.class)

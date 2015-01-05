@@ -1,6 +1,6 @@
 package org.github.nyrkovalex.ironadmin.core.servlet;
 
-import org.github.nyrkovalex.ironadmin.core.defaults.DefaultContext;
+import org.github.nyrkovalex.ironadmin.core.defaults.DefaultAdminContext;
 import org.github.nyrkovalex.ironadmin.core.pages.dummy.DummyAdminContext;
 import org.junit.Test;
 
@@ -14,7 +14,7 @@ public class AdminDispatcherServletInitTest extends AdminDispatcherServletTest {
     @Test
     public void testShouldUseDefaultContext() throws Exception {
         getDispatcherServlet().init(getServletConfig());
-        assertThat(getDispatcherServlet().getAdminContext(), instanceOf(DefaultContext.class));
+        assertThat(getDispatcherServlet().getAdminContext(), instanceOf(DefaultAdminContext.class));
     }
 
     @Test

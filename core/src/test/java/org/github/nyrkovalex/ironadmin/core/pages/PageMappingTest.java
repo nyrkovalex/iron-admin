@@ -18,7 +18,7 @@ public class PageMappingTest {
 
     @Test
     public void testShouldUseClassNameAsPageUrl() throws Exception {
-        assertThat(pageMapping.getUrl(), is("/page-url-tests"));
+        assertThat(pageMapping.getUrl(), is("/page-mapping-tests"));
     }
 
 

@@ -2,10 +2,11 @@ package org.github.nyrkovalex.ironadmin.core.pages;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Collection;
+import java.util.Map;
 import java.util.Optional;
 
 public interface PageRegistry {
+
     /**
      * Retrieves a pages from register by its url
      *
@@ -13,7 +14,7 @@ public interface PageRegistry {
      * @return optional-wrapped pages or null if pages was not found
      */
     @NotNull
-    Optional<Page> getPage(String url);
+    Optional<Page> pageFor(String url);
 
     /**
      * Registers a pages within admin application
@@ -31,7 +32,7 @@ public interface PageRegistry {
      * @return itself for chained invocations
      */
     @NotNull
-    PageRegistry register(@NotNull Page<?, ?>... pages);
+    PageRegistry register(@NotNull Page<?>... pages);
 
     /**
      * Returns all pages registered within current registry
@@ -39,5 +40,5 @@ public interface PageRegistry {
      * @return collection of pages registered within current registry
      */
     @NotNull
-    Collection<Page> getPages();
+    public Map<String, String> pageMap();
 }

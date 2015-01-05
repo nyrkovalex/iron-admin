@@ -10,7 +10,7 @@
     <title th:text="${ia.title}">Admin title</title>
 </head>
 <body>
-<div th:replace="sidebars :: ia-sidebar-left"></div>
+<div th:replace="ui/templates/default/html/sidebars.html :: ia-sidebar-left"></div>
 <article class="ia-content">
     <div class="ia-container">
         <header>
@@ -24,7 +24,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="entity : ${ page.provider.all() }">
+            <tr th:each="entity : ${ page.entities }">
                 <td th:each="property : ${ page.properties }" th:text="${ entity.__${ property.name }__ }">Value</td>
                 <td>
                     <a th:href=" ${ iaUrl.resolve( page.url + '/' + entity.__${ page.idPropertyName }__) } ">Edit</a>
@@ -34,6 +34,6 @@
         </table>
     </div>
 </article>
-<div th:replace="sidebars :: ia-sidebar-right"></div>
+<div th:replace="ui/templates/default/html/sidebars.html :: ia-sidebar-right"></div>
 </body>
 </html>

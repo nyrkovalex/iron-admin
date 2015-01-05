@@ -1,7 +1,7 @@
 package org.github.nyrkovalex.ironadmin.example.users;
 
 import org.github.nyrkovalex.ironadmin.core.EntityProvider;
-import org.github.nyrkovalex.ironadmin.core.pages.DefaultTemplatePage;
+import org.github.nyrkovalex.ironadmin.core.defaults.DefaultTemplatePage;
 import org.github.nyrkovalex.ironadmin.core.pages.EntityMeta;
 import org.github.nyrkovalex.ironadmin.core.pages.PageMapping;
 import org.github.nyrkovalex.ironadmin.core.pages.PropertyDefinition;
@@ -9,7 +9,8 @@ import org.github.nyrkovalex.ironadmin.core.pages.PropertyDefinition;
 import java.util.Arrays;
 import java.util.List;
 
-public class UsersPage extends DefaultTemplatePage<User, String> {
+public class UsersPage extends DefaultTemplatePage<User> {
+
     public UsersPage() {
         super(
                 User.class,
@@ -25,7 +26,7 @@ public class UsersPage extends DefaultTemplatePage<User, String> {
              );
     }
 
-    private static class UserProvider implements EntityProvider<User, String> {
+    private static class UserProvider implements EntityProvider<User> {
 
         public static final List<User> USERS = Arrays.asList(
                 new User("dude@nowhere.com", "Jeffrey", "Lebowski", "secret"),
@@ -39,7 +40,7 @@ public class UsersPage extends DefaultTemplatePage<User, String> {
         }
 
         @Override
-        public User byId(String s) {
+        public User one(String s) {
             return USERS.get(0);
         }
     }

@@ -13,6 +13,8 @@ h1 {
 
 h2 {
   font-size: 18px;
+  border-bottom: 1px solid #999999;
+  padding-bottom: 12px;
 }
 
 .ia-content {
@@ -23,6 +25,19 @@ h2 {
   h2 {
     font-size: 36px;
     margin-bottom: 18px;
+
+    small {
+
+      &:before {
+        content: "/";
+        margin-right: 12px;
+        display: inline-block;
+      }
+
+      margin-left: 12px;
+      font-size: 24px;
+      color: #999999;
+    }
   }
 }
 
@@ -91,5 +106,37 @@ table.ia-entity-list {
   td {
     border-top: @ia-table-border;
     .ia-table-cell;
+  }
+}
+
+@ia-form-label-width: 180px;
+@ia-form-label-spacing: 24px;
+
+form.ia-edit-form {
+
+  div {
+    margin-bottom: 24px;
+
+    label {
+      span {
+        font-size: 14px;
+        text-align: right;
+        width: @ia-form-label-width;
+        display: inline-block;
+      }
+    }
+
+    input {
+      height: 24px;
+      border: 1px solid #999999;
+      border-radius: 3px;
+      padding-left: 3px;
+      margin-left: @ia-form-label-spacing;
+    }
+  }
+
+  footer {
+    text-align: right;
+    width: @ia-form-label-width
   }
 }

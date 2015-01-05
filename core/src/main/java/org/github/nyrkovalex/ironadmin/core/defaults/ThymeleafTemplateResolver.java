@@ -1,7 +1,7 @@
 package org.github.nyrkovalex.ironadmin.core.defaults;
 
 import org.github.nyrkovalex.ironadmin.core.TemplateResolver;
-import org.github.nyrkovalex.ironadmin.core.pages.Page;
+import org.github.nyrkovalex.ironadmin.core.pages.PageContext;
 import org.github.nyrkovalex.ironutils.IronContracts;
 import org.jetbrains.annotations.NotNull;
 import org.thymeleaf.TemplateEngine;
@@ -13,11 +13,10 @@ import java.io.Writer;
 
 class ThymeleafTemplateResolver implements TemplateResolver {
 
-    public static final String UI_OUT_DIR = "ui/templates/default/html/";
     private final TemplateEngine templateEngine;
-    private final IronAdminEnvironment env;
+    private final EnvironmentContext env;
 
-    public ThymeleafTemplateResolver(IronAdminEnvironment env) {
+    public ThymeleafTemplateResolver(EnvironmentContext env) {
         org.thymeleaf.templateresolver.TemplateResolver templateResolver = createThymeleafResolver();
         templateEngine = createThymeleafEngine(templateResolver);
         this.env = env;
@@ -32,39 +31,37 @@ class ThymeleafTemplateResolver implements TemplateResolver {
     private org.thymeleaf.templateresolver.TemplateResolver createThymeleafResolver() {
         org.thymeleaf.templateresolver.TemplateResolver templateResolver =
                 new org.thymeleaf.templateresolver.TemplateResolver();
-        templateResolver.setPrefix(UI_OUT_DIR);
-        templateResolver.setSuffix(".html");
         templateResolver.setResourceResolver(new ClassLoaderResourceResolver());
         return templateResolver;
     }
 
     @Override
-    public void resolvePageTemplate(String urlPrefix, @NotNull Page page, @NotNull Writer writer) {
-        IronContracts.notNull(page, "page", writer, "writer");
+    public void resolvePageTemplate(String urlPrefix, @NotNull PageContext pageContext, @NotNull Writer writer) {
+        IronContracts.notNull(pageContext, "context", writer, "writer");
 
-        IContext context = new MainPageContext(page, urlPrefix);
-        templateEngine.process(page.getTemplateName(), context, writer);
+        IContext thymeleafContext = new MainPageContext(pageContext, urlPrefix, env);
+        templateEngine.process(pageContext.templatePath(), thymeleafContext, writer);
     }
 
-    private class MainPageContext extends Context {
+    private static class MainPageContext extends Context {
 
-        public MainPageContext(Page page, String urlPrefix) {
-            setVariable("page", page);
+        public MainPageContext(PageContext context, String urlPrefix, EnvironmentContext env) {
+            setVariable("page", context);
             setVariable("ia", env);
             setVariable("iaUrl", new UrlResolver(urlPrefix));
         }
+    }
 
-        private class UrlResolver {
-            private final String prefix;
+    private static class UrlResolver {
+        private final String prefix;
 
-            public UrlResolver(String urlPrefix) {
-                this.prefix = urlPrefix;
-            }
+        public UrlResolver(String urlPrefix) {
+            this.prefix = urlPrefix;
+        }
 
-            @SuppressWarnings("UnusedDeclaration")
-            public String resolve(String url) {
-                return prefix + url;
-            }
+        @SuppressWarnings("UnusedDeclaration")
+        public String resolve(String url) {
+            return prefix + url;
         }
     }
 }

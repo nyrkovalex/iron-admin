@@ -1,6 +1,6 @@
 package org.github.nyrkovalex.ironadmin.core.defaults;
 
-import org.github.nyrkovalex.ironadmin.core.pages.Page;
+import org.github.nyrkovalex.ironadmin.core.pages.PageContext;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,7 +15,7 @@ public class ThymeleafTemplateResolverTest {
 
     @Before
     public void setUp() throws Exception {
-        resolver = new ThymeleafTemplateResolver(mock(IronAdminEnvironment.class));
+        resolver = new ThymeleafTemplateResolver(mock(EnvironmentContext.class));
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -25,6 +25,6 @@ public class ThymeleafTemplateResolverTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testShouldThrowOnNullWriter() throws Exception {
-        resolver.resolvePageTemplate("/foo", mock(Page.class), null);
+        resolver.resolvePageTemplate("/foo", mock(PageContext.class), null);
     }
 }

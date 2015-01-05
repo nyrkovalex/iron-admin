@@ -4,6 +4,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 
+<head>
+    <title>Sidebar templates</title>
+</head>
+
 <body>
 <div th:fragment="ia-sidebar-left" class="ia-sidebar-left">
     <div class="ia-container">
@@ -11,8 +15,8 @@
     </div>
     <nav>
         <ul>
-            <li th:each="p : ${ ia.pages }" th:class="${ p.url == page.url } ? ia-active : '' ">
-                <a th:text="${ p.title }" th:href="${ iaUrl.resolve(p.url) }">Page title</a>
+            <li th:each="p : ${ ia.pages }" th:class="${ p.key == page.url } ? ia-active : '' ">
+                <a th:text="${ p.value }" th:href="${ iaUrl.resolve(p.key) }">Page title</a>
             </li>
         </ul>
     </nav>
