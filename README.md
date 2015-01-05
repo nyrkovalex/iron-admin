@@ -1,4 +1,4 @@
-iron-admin
+iron-admin [![Build Status](https://travis-ci.org/nyrkovalex/iron-admin.svg?branch=master)](https://travis-ci.org/nyrkovalex/iron-admin)
 ==========
 
 Declarative web application admin interface in Java. Deeply work in progress
