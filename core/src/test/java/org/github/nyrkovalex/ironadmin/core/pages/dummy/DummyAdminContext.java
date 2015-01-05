@@ -7,31 +7,31 @@ import org.github.nyrkovalex.ironadmin.core.pages.PageRegistry;
 import org.jetbrains.annotations.NotNull;
 
 public class DummyAdminContext implements AdminContext {
-  @NotNull
-  @Override
-  public PageRegistry getRegistry() {
-    return DummyFactory.getRegistry();
-  }
+    @NotNull
+    @Override
+    public PageRegistry getRegistry() {
+        return DummyFactory.getRegistry();
+    }
 
-  @NotNull
-  @Override
-  public TemplateResolver getTemplateResolver() {
-    return DummyFactory.getResolver();
-  }
+    @NotNull
+    @Override
+    public TemplateResolver getTemplateResolver() {
+        return DummyFactory.getResolver();
+    }
 
-  @Override
-  public void setTitle(@NotNull String title) {
+    @Override
+    public void setTitle(@NotNull String title) {
 
-  }
+    }
 
-  @NotNull
-  @Override
-  public String getTitle() {
-    return "TEST";
-  }
+    @NotNull
+    @Override
+    public String getTitle() {
+        return "TEST";
+    }
 
-  @Override
-  public void register(@NotNull Page... pages) {
+    @Override
+    public void register(@NotNull Page... pages) {
 
-  }
+    }
 }

@@ -2,70 +2,70 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+    <modelVersion>4.0.0</modelVersion>
 
-  <groupId>org.github.nyrkovalex</groupId>
-  <artifactId>iron-admin</artifactId>
+    <groupId>org.github.nyrkovalex</groupId>
+    <artifactId>iron-admin</artifactId>
 
-  <properties>
-    <ia.version>${project.version}</ia.version>
-    <jetbrains-annotations.version>13.0</jetbrains-annotations.version>
-    <junit.version>4.11</junit.version>
-    <mockito.version>1.10.8</mockito.version>
-    <slf4j.version>1.7.7</slf4j.version>
-    <maven-compiler-plugin.version>3.2</maven-compiler-plugin.version>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
+    <properties>
+        <ia.version>${project.version}</ia.version>
+        <jetbrains-annotations.version>13.0</jetbrains-annotations.version>
+        <junit.version>4.11</junit.version>
+        <mockito.version>1.10.8</mockito.version>
+        <slf4j.version>1.7.7</slf4j.version>
+        <maven-compiler-plugin.version>3.2</maven-compiler-plugin.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
 
-  <version>0.1</version>
+    <version>0.1</version>
 
-  <modules>
-    <module>core</module>
-    <module>server</module>
-    <module>example-app</module>
-  </modules>
+    <modules>
+        <module>core</module>
+        <module>server</module>
+        <module>example-app</module>
+    </modules>
 
-  <dependencies>
-    <dependency>
-      <groupId>org.jetbrains</groupId>
-      <artifactId>annotations</artifactId>
-      <version>${jetbrains-annotations.version}</version>
-    </dependency>
+    <dependencies>
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>${jetbrains-annotations.version}</version>
+        </dependency>
 
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-jdk14</artifactId>
-      <version>${slf4j.version}</version>
-    </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-jdk14</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
 
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>${junit.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.mockito</groupId>
-      <artifactId>mockito-core</artifactId>
-      <version>${mockito.version}</version>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>${mockito.version}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 
-  <packaging>pom</packaging>
+    <packaging>pom</packaging>
 
-  <build>
-    <plugins>
-      <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>${maven-compiler-plugin.version}</version>
-        <configuration>
-          <source>1.8</source>
-          <target>1.8</target>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin.version}</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 
 </project>

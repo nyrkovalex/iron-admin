@@ -2,40 +2,40 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+    <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>iron-admin-server</artifactId>
+    <artifactId>iron-admin-server</artifactId>
 
-  <properties>
-    <jetty.version>9.3.0.M0</jetty.version>
-  </properties>
+    <properties>
+        <jetty.version>9.3.0.M0</jetty.version>
+    </properties>
 
-  <packaging>jar</packaging>
+    <packaging>jar</packaging>
 
-  <parent>
-    <artifactId>iron-admin</artifactId>
-    <groupId>org.github.nyrkovalex</groupId>
-    <version>0.1</version>
-  </parent>
+    <parent>
+        <artifactId>iron-admin</artifactId>
+        <groupId>org.github.nyrkovalex</groupId>
+        <version>0.1</version>
+    </parent>
 
-  <dependencies>
-    <dependency>
-      <groupId>org.github.nyrkovalex</groupId>
-      <artifactId>iron-admin-core</artifactId>
-      <version>${ia.version}</version>
-    </dependency>
+    <dependencies>
+        <dependency>
+            <groupId>org.github.nyrkovalex</groupId>
+            <artifactId>iron-admin-core</artifactId>
+            <version>${ia.version}</version>
+        </dependency>
 
-    <dependency>
-      <groupId>org.eclipse.jetty</groupId>
-      <artifactId>jetty-server</artifactId>
-      <version>${jetty.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.eclipse.jetty</groupId>
-      <artifactId>jetty-servlet</artifactId>
-      <version>${jetty.version}</version>
-    </dependency>
-  </dependencies>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-server</artifactId>
+            <version>${jetty.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-servlet</artifactId>
+            <version>${jetty.version}</version>
+        </dependency>
+    </dependencies>
 
 
 </project>

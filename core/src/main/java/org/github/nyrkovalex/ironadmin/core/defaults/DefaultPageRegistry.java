@@ -12,39 +12,39 @@ import java.util.Map;
 import java.util.Optional;
 
 class DefaultPageRegistry implements PageRegistry {
-  private final Map<String, Page> pages;
+    private final Map<String, Page> pages;
 
-  DefaultPageRegistry() {
-    pages = new LinkedHashMap<>();
-  }
-
-  @NotNull
-  @Override
-  public Optional<Page> getPage(String url) {
-    return Optional.ofNullable(pages.get(url));
-  }
-
-  @NotNull
-  @Override
-  public PageRegistry register(@NotNull Page page) {
-    IronContracts.notNull(page, "page");
-    IronMaps.putOrThrowIfPresent(pages, page.getUrl(), page);
-    return this;
-  }
-
-  @NotNull
-  @Override
-  public PageRegistry register(@NotNull Page... pages) {
-    IronContracts.notNullOrEmpty(pages, "pages");
-    for (Page p : pages) {
-      register(p);
+    DefaultPageRegistry() {
+        pages = new LinkedHashMap<>();
     }
-    return this;
-  }
 
-  @NotNull
-  @Override
-  public Collection<Page> getPages() {
-    return pages.values();
-  }
+    @NotNull
+    @Override
+    public Optional<Page> getPage(String url) {
+        return Optional.ofNullable(pages.get(url));
+    }
+
+    @NotNull
+    @Override
+    public PageRegistry register(@NotNull Page page) {
+        IronContracts.notNull(page, "page");
+        IronMaps.putOrThrowIfPresent(pages, page.getUrl(), page);
+        return this;
+    }
+
+    @NotNull
+    @Override
+    public PageRegistry register(@NotNull Page... pages) {
+        IronContracts.notNullOrEmpty(pages, "pages");
+        for (Page p : pages) {
+            register(p);
+        }
+        return this;
+    }
+
+    @NotNull
+    @Override
+    public Collection<Page> getPages() {
+        return pages.values();
+    }
 }

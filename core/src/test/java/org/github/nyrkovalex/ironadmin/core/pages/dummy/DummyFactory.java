@@ -10,35 +10,35 @@ import static org.mockito.Mockito.mock;
 
 public final class DummyFactory {
 
-  private static PageRegistry registry;
-  private static TemplateResolver resolver;
-  private static HttpServletRequest servletRequest;
-  private static HttpServletResponse servletResponse;
+    private static PageRegistry registry;
+    private static TemplateResolver resolver;
+    private static HttpServletRequest servletRequest;
+    private static HttpServletResponse servletResponse;
 
-  private DummyFactory() {
+    private DummyFactory() {
 
-  }
+    }
 
-  public static void reset() {
-    servletResponse = mock(HttpServletResponse.class);
-    servletRequest = mock(HttpServletRequest.class);
-    resolver = mock(TemplateResolver.class);
-    registry = mock(PageRegistry.class);
-  }
+    public static void reset() {
+        servletResponse = mock(HttpServletResponse.class);
+        servletRequest = mock(HttpServletRequest.class);
+        resolver = mock(TemplateResolver.class);
+        registry = mock(PageRegistry.class);
+    }
 
-  public static PageRegistry getRegistry() {
-    return registry;
-  }
+    public static PageRegistry getRegistry() {
+        return registry;
+    }
 
-  public static TemplateResolver getResolver() {
-    return resolver;
-  }
+    public static TemplateResolver getResolver() {
+        return resolver;
+    }
 
-  public static HttpServletRequest getRequest() {
-    return servletRequest;
-  }
+    public static HttpServletRequest getRequest() {
+        return servletRequest;
+    }
 
-  public static HttpServletResponse getResponse() {
-    return servletResponse;
-  }
+    public static HttpServletResponse getResponse() {
+        return servletResponse;
+    }
 }

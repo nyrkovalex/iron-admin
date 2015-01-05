@@ -5,34 +5,34 @@
       xmlns:th="http://www.thymeleaf.org">
 
 <head>
-  <link rel="stylesheet" href="../../../templates/default/css/reset.css"/>
-  <link rel="stylesheet" href="../../../templates/default/css/iron-admin.css"/>
-  <title th:text="${ia.title}">Admin title</title>
+    <link rel="stylesheet" href="../../../templates/default/css/reset.css"/>
+    <link rel="stylesheet" href="../../../templates/default/css/iron-admin.css"/>
+    <title th:text="${ia.title}">Admin title</title>
 </head>
 <body>
 <div th:replace="sidebars :: ia-sidebar-left"></div>
 <article class="ia-content">
-  <div class="ia-container">
-    <header>
-      <h2 th:text="${ page.title }">Page title</h2>
-    </header>
-    <table class="ia-entity-list">
-      <thead>
-      <tr>
-        <th th:each="property : ${ page.properties }" th:text="${ property.displayName }">First Property</th>
-        <th></th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr th:each="entity : ${ page.provider.all() }">
-        <td th:each="property : ${ page.properties }" th:text="${ entity.__${ property.name }__ }">Value</td>
-        <td>
-          <a th:href=" ${ iaUrl.resolve( page.url + '/' + entity.__${ page.idPropertyName }__) } ">Edit</a>
-        </td>
-      </tr>
-      </tbody>
-    </table>
-  </div>
+    <div class="ia-container">
+        <header>
+            <h2 th:text="${ page.title }">Page title</h2>
+        </header>
+        <table class="ia-entity-list">
+            <thead>
+            <tr>
+                <th th:each="property : ${ page.properties }" th:text="${ property.displayName }">First Property</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="entity : ${ page.provider.all() }">
+                <td th:each="property : ${ page.properties }" th:text="${ entity.__${ property.name }__ }">Value</td>
+                <td>
+                    <a th:href=" ${ iaUrl.resolve( page.url + '/' + entity.__${ page.idPropertyName }__) } ">Edit</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </article>
 <div th:replace="sidebars :: ia-sidebar-right"></div>
 </body>

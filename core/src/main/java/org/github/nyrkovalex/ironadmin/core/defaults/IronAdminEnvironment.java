@@ -7,25 +7,25 @@ import org.github.nyrkovalex.ironutils.IronContracts;
 import java.util.Collection;
 
 class IronAdminEnvironment {
-  public static final String DEFAULT_TITLE = "Iron Admin";
-  private final PageRegistry pageRegistry;
-  private String title;
+    public static final String DEFAULT_TITLE = "Iron Admin";
+    private final PageRegistry pageRegistry;
+    private String title;
 
-  public IronAdminEnvironment(PageRegistry pageRegistry) {
-    this.pageRegistry = pageRegistry;
-    setTitle(DEFAULT_TITLE);
-  }
+    public IronAdminEnvironment(PageRegistry pageRegistry) {
+        this.pageRegistry = pageRegistry;
+        setTitle(DEFAULT_TITLE);
+    }
 
-  public String getTitle() {
-    return title;
-  }
+    public String getTitle() {
+        return title;
+    }
 
-  public void setTitle(String title) {
-    IronContracts.notNullOrEmpty(title, "title");
-    this.title = title;
-  }
+    public void setTitle(String title) {
+        IronContracts.notNullOrEmpty(title, "title");
+        this.title = title;
+    }
 
-  public Collection<Page> getPages() {
-    return pageRegistry.getPages();
-  }
+    public Collection<Page> getPages() {
+        return pageRegistry.getPages();
+    }
 }

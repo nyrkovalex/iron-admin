@@ -9,35 +9,35 @@ import static org.junit.Assert.assertThat;
 @SuppressWarnings("ConstantConditions")
 public class PageMappingTest {
 
-  private PageMapping pageMapping;
+    private PageMapping pageMapping;
 
-  @Before
-  public void setUp() throws Exception {
-    pageMapping = PageMapping.of(PageMappingTest.class);
-  }
+    @Before
+    public void setUp() throws Exception {
+        pageMapping = PageMapping.of(PageMappingTest.class);
+    }
 
-  @Test
-  public void testShouldUseClassNameAsPageUrl() throws Exception {
-    assertThat(pageMapping.getUrl(), is("/page-url-tests"));
-  }
-
-
-  @Test(expected = IllegalArgumentException.class)
-  public void testShouldThrowIfUrlIsNull() throws Exception {
-    String url = null;
-    PageMapping.of(url);
-  }
-
-  @Test(expected = IllegalArgumentException.class)
-  public void testShouldThrowIfClassIsNull() throws Exception {
-    Class<?> clazz = null;
-    PageMapping.of(clazz);
-  }
+    @Test
+    public void testShouldUseClassNameAsPageUrl() throws Exception {
+        assertThat(pageMapping.getUrl(), is("/page-url-tests"));
+    }
 
 
-  @Test(expected = IllegalArgumentException.class)
-  public void testShouldThrowWhenConstructingWithEmptyUrl() throws Exception {
-    PageMapping.of("");
-  }
+    @Test(expected = IllegalArgumentException.class)
+    public void testShouldThrowIfUrlIsNull() throws Exception {
+        String url = null;
+        PageMapping.of(url);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testShouldThrowIfClassIsNull() throws Exception {
+        Class<?> clazz = null;
+        PageMapping.of(clazz);
+    }
+
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testShouldThrowWhenConstructingWithEmptyUrl() throws Exception {
+        PageMapping.of("");
+    }
 
 }

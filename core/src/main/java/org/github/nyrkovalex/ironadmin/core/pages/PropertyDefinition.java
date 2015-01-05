@@ -5,25 +5,25 @@ import org.github.nyrkovalex.ironutils.IronStrings;
 import org.jetbrains.annotations.NotNull;
 
 public class PropertyDefinition {
-  private final String name;
-  private final String displayName;
+    private final String name;
+    private final String displayName;
 
-  public PropertyDefinition(@NotNull String name) {
-    this(name, IronStrings.camelCaseToSentence(name));
-  }
+    public PropertyDefinition(@NotNull String name) {
+        this(name, IronStrings.camelCaseToSentence(name));
+    }
 
-  public PropertyDefinition(@NotNull String name, @NotNull String displayName) {
-    IronContracts.notNullOrEmpty(name, "name", displayName, "displayName");
+    public PropertyDefinition(@NotNull String name, @NotNull String displayName) {
+        IronContracts.notNullOrEmpty(name, "name", displayName, "displayName");
 
-    this.name = name;
-    this.displayName = displayName;
-  }
+        this.name = name;
+        this.displayName = displayName;
+    }
 
-  public String getName() {
-    return name;
-  }
+    public String getName() {
+        return name;
+    }
 
-  public String getDisplayName() {
-    return displayName;
-  }
+    public String getDisplayName() {
+        return displayName;
+    }
 }
