@@ -1,7 +1,7 @@
 package org.github.nyrkovalex.ironadmin.core.defaults;
 
 import org.github.nyrkovalex.ironadmin.core.pages.PageRegistry;
-import org.github.nyrkovalex.ironutils.IronContracts;
+import org.github.nyrkovalex.ironadmin.core.utils.IronContracts;
 
 import java.util.Map;
 

@@ -2,7 +2,7 @@ package org.github.nyrkovalex.ironadmin.core.defaults;
 
 import org.github.nyrkovalex.ironadmin.core.TemplateResolver;
 import org.github.nyrkovalex.ironadmin.core.pages.PageContext;
-import org.github.nyrkovalex.ironutils.IronContracts;
+import org.github.nyrkovalex.ironadmin.core.utils.IronContracts;
 import org.jetbrains.annotations.NotNull;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;

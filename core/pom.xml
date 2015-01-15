@@ -34,11 +34,6 @@
             <artifactId>thymeleaf</artifactId>
             <version>${thymeleaf.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.github.nyrkovalex</groupId>
-            <artifactId>iron-utils</artifactId>
-            <version>0.1</version>
-        </dependency>
     </dependencies>
 
     <build>

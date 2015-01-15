@@ -2,8 +2,8 @@ package org.github.nyrkovalex.ironadmin.core.defaults;
 
 import org.github.nyrkovalex.ironadmin.core.pages.Page;
 import org.github.nyrkovalex.ironadmin.core.pages.PageRegistry;
-import org.github.nyrkovalex.ironutils.IronContracts;
-import org.github.nyrkovalex.ironutils.IronMaps;
+import org.github.nyrkovalex.ironadmin.core.utils.IronContracts;
+import org.github.nyrkovalex.ironadmin.core.utils.IronMaps;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.LinkedHashMap;

@@ -1,8 +1,8 @@
 package org.github.nyrkovalex.ironadmin.core.pages;
 
 import org.github.nyrkovalex.ironadmin.core.EntityProvider;
-import org.github.nyrkovalex.ironutils.IronContracts;
-import org.github.nyrkovalex.ironutils.IronObjects;
+import org.github.nyrkovalex.ironadmin.core.utils.IronContracts;
+import org.github.nyrkovalex.ironadmin.core.utils.IronObjects;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
