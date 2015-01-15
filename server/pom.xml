@@ -14,13 +14,13 @@
 
     <parent>
         <artifactId>iron-admin</artifactId>
-        <groupId>org.github.nyrkovalex</groupId>
+        <groupId>com.github.nyrkovalex</groupId>
         <version>0.1</version>
     </parent>
 
     <dependencies>
         <dependency>
-            <groupId>org.github.nyrkovalex</groupId>
+            <groupId>com.github.nyrkovalex</groupId>
             <artifactId>iron-admin-core</artifactId>
             <version>${ia.version}</version>
         </dependency>

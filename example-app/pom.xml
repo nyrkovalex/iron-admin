@@ -16,7 +16,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.github.nyrkovalex</groupId>
+            <groupId>com.github.nyrkovalex</groupId>
             <artifactId>iron-admin-server</artifactId>
             <version>${ia.version}</version>
         </dependency>

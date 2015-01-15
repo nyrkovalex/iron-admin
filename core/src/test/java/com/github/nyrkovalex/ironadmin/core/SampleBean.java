@@ -1,0 +1,21 @@
+package com.github.nyrkovalex.ironadmin.core;
+
+
+@SuppressWarnings("UnusedDeclaration")
+public class SampleBean {
+    public String getFirstName() {
+        return "John";
+    }
+
+    public String getLastName() {
+        return "Doe";
+    }
+
+    public int getAge() {
+        return 42;
+    }
+
+    public String getSecret() {
+        return "i am not here";
+    }
+}

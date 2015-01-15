@@ -18,7 +18,7 @@
 
     <parent>
         <artifactId>iron-admin</artifactId>
-        <groupId>org.github.nyrkovalex</groupId>
+        <groupId>com.github.nyrkovalex</groupId>
         <version>0.1</version>
     </parent>
 
