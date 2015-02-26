@@ -17,18 +17,18 @@ To get it running do the following:
 
 ## Installation
 
-1. Project depend on [iron-utils](https://github.com/nyrkovalex/iron-utils) so go there and
+1. Project depend on [java-seed](https://github.com/nyrkovalex/java-seed) so go there and
 
   ```bash
   # create some directory on you system
-  mkdir iron-stuff
-  cd iron-stuff
+  mkdir tmp
+  cd tmp
   
   # clone the repository somewhere
-  git clone git@github.com:nyrkovalex/iron-utils.git
+  git clone git@github.com:nyrkovalex/java-seed.git
   
   # install its maven artifact to local repository
-  cd iron-utils
+  cd java-seed
   mvn install
   ```
   
